@@ -48,21 +48,36 @@ body {
 h2 {
     font-weight: normal !important;
 }
-
+.logo {
+    width: 3.5rem;
+    height: 2rem;
+}
 .sidebar {
     height: 100vh;
     overflow-y: auto !important;
-    box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.2) !important;
 }
+.nav-pills .nav-link {
+    border-radius: 10px;
+}
+
 .sidebar-icon {
     height: 22px;
 }
 main {
     overflow-y: auto !important;
+    background-color: #f8f8f8;
+}
+.section-heading {
+    margin-left: 0px;
 }
 .content-section + .active {
     display: block !important;
 }
 .content-section {
     display: none;
+}
+
+.stat-card {
+    border-radius: 10px;
 }

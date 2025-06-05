@@ -1,4 +1,5 @@
 import { fetchEmployees } from "./api-calls.js";
+import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const sidebarLinks = document.querySelectorAll("#sidebarMenu .nav-link");
@@ -6,6 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const setActiveLink = (clickedLink) => {
         sidebarLinks.forEach((link) => link.classList.remove("active"));
         clickedLink.classList.add("active");
+    };
+
+    const showSpinner = (show) => {
+        document.getElementById("spinner").style.display = show
+            ? "block"
+            : "none";
     };
 
     const showSection = (targetId) => {
@@ -26,13 +33,36 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetId = link.getAttribute("data-target");
             showSection(targetId);
 
-            if (targetId === "view-emp-section") {
-                try {
-                    const data = await fetchEmployees();
-                    console.log(data);
-                } catch (error) {
-                    console.error(error);
-                }
+            switch (targetId) {
+                case "dashboard":
+                    showSpinner(true);
+                    try {
+                        const data = await fetchEmployees();
+                        console.log(data.employees);
+                        renderEmployeeCount(data.employees);
+                        showSpinner(false);
+                    } catch (error) {
+                        console.log(error);
+                        showSpinner(false);
+                    }
+                    break;
+
+                case "view-emp-section":
+                    showSpinner(true);
+                    try {
+                        const data = await fetchEmployees();
+                        console.log(data.employees);
+                        renderEmployeeTable(data.employees);
+                        showSpinner(false);
+                    } catch (error) {
+                        console.error(error);
+                        showSpinner(false);
+                    }
+
+                    break;
+
+                default:
+                    break;
             }
         });
     });
