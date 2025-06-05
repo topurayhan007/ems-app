@@ -29,12 +29,11 @@
             </a>
             <hr />
             <ul class="nav nav-pills flex-column mb-auto" id="sidebarMenu">
-                <li class="nav-item">
+                <li>
                     <a
                         href="#"
-                        data-target="home"
+                        data-target="dashboard"
                         class="nav-link link-dark d-flex gap-1 align-items-center active"
-                        aria-current="page"
                     >
                         <i data-lucide="home" class="sidebar-icon"></i>
                         Dashboard
@@ -94,12 +93,21 @@
         </aside>
 
         <main class="overflow-y-auto container-fluid p-md-5">
-            <section class="home content-section active" id="home">
+            <section class="home content-section" id="home1">
                 <h3>Welcome,</h3>
             </section>
 
+            <section class="home content-section active" id="dashboard">
+                <h3>Dashboard</h3>
+            </section>
+
             <section class="view-emp content-section" id="view-emp-section">
-                <h3>View Employees</h3>
+                <h3 class="pb-md-3">View Employees</h3>
+                <div class="d-flex justify-content-center py-2">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </section>
 
             <section class="search-emp content-section" id="search-emp-section">
@@ -130,6 +138,6 @@
         <script>
             lucide.createIcons();
         </script>
-        <script src="scripts/main.js"></script>
+        <script type="module" src="scripts/main.js"></script>
     </body>
 </html>

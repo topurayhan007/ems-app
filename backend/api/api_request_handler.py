@@ -21,9 +21,20 @@ class APIRequestHandler(BaseHTTPRequestHandler):
         self.experience_service = experience_service
         super().__init__(*args, **kwargs)
 
+    def _set_cors_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+
+    def do_OPTIONS(self):
+        self.send_response(200, "ok")
+        self._set_cors_headers()
+        self.end_headers()
+
     def _send_response(self, status_code, status_msg, data):
         self.send_response(status_code, status_msg)
         self.send_header("Content-type", "application/json")
+        self._set_cors_headers()
         self.end_headers()
         self.wfile.write(json.dumps(data).encode())
 

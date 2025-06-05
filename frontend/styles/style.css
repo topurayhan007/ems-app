@@ -60,9 +60,9 @@ h2 {
 main {
     overflow-y: auto !important;
 }
-.content-section {
-    display: none;
-}
 .content-section + .active {
     display: block !important;
+}
+.content-section {
+    display: none;
 }
