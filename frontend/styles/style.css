@@ -53,6 +53,9 @@ h2 {
     width: 3.5rem;
     height: 2rem;
 }
+.btn {
+    border-radius: 10px !important;
+}
 .sidebar {
     height: 100vh;
     overflow-y: auto !important;
@@ -132,4 +135,13 @@ td:last-child {
 }
 .btn-delete:hover {
     background-color: rgb(243, 50, 89) !important;
+}
+.card-wrapper .add-employee-form {
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}
+.card-wrapper .card-header,
+.card-wrapper .card {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
 }

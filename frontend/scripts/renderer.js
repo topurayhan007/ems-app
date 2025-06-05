@@ -20,7 +20,7 @@ export const renderEmployeeTable = (employees) => {
                 <div class="d-flex gap-2">
                     <button class="btn btn-action btn-edit" data-id="${
                         emp._employee_id
-                    }">Edit</button>
+                    }" data-bs-toggle="modal" data-bs-target="#editFormModal">Edit</button>
                     <button class="btn btn-action btn-delete" data-id="${
                         emp._employee_id
                     }">Delete</button>
