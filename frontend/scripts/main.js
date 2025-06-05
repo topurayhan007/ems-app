@@ -66,4 +66,33 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    const defaultActiveLink = document.querySelector(
+        "#sidebarMenu .nav-link.active"
+    );
+    if (defaultActiveLink) {
+        defaultActiveLink.click();
+    }
+
+    document
+        .querySelector("#employee-table tbody")
+        .addEventListener("click", (e) => {
+            if (e.target.classList.contains("btn-edit")) {
+                const employeeId = e.target.getAttribute("data-id");
+                // TODO: Open edit modal
+                console.log("Edit clicked for employee ID:", employeeId);
+                // fetch employee data and edit modal
+            }
+        });
+
+    document
+        .querySelector("#employee-table tbody")
+        .addEventListener("click", (e) => {
+            if (e.target.classList.contains("btn-delete")) {
+                const employeeId = e.target.getAttribute("data-id");
+                // TODO: Open edit modal
+                console.log("Edit clicked for employee ID:", employeeId);
+                // fetch employee data and edit modal
+            }
+        });
 });
