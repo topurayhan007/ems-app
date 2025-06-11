@@ -5,16 +5,23 @@ export const renderEmployeeTable = (employees) => {
     employees.forEach((emp) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td>${emp._employee_id || ""}</td>
-            <td>${emp._name || ""}</td>
-            <td>${emp._email || ""}</td>
-            <td>${emp._dept || ""}</td>
-            <td>${emp._designation || ""}</td>
-            <td>${emp._role || ""}</td>
-            <td>${emp._phone_no || ""}</td>
-            <td>${emp._present_address || ""}</td>
-            <td>${emp._marital_status || ""}</td>
-            <td>${emp._gender || ""}</td>
+            <td>${emp._employee_id || "-"}</td>
+            <td>${emp._name || "-"}</td>
+            <td>${emp._email || "-"}</td>
+            <td>${emp._dept || "-"}</td>
+            <td>${emp._designation || "-"}</td>
+            <td>${emp._role || "-"}</td>
+            <td>${emp._phone_no || "-"}</td>
+            <td>${emp._joining_date || "-"}</td>
+            <td>${emp._nid || "-"}</td>
+            <td>${emp._gender || "-"}</td>
+            <td>${emp._salary || "-"}</td>
+            <td>${emp._marital_status || "-"}</td>
+            <td>${emp._father_name || "-"}</td>
+            <td>${emp._mother_name || "-"}</td>
+            <td>${emp._present_address || "-"}</td>
+            <td>${emp._permanent_address || "-"}</td>
+            <td>${emp._nationality || "-"}</td>
             
             <td>
                 <div class="d-flex gap-2">

@@ -53,16 +53,6 @@
                 <li>
                     <a
                         href="#"
-                        data-target="search-emp-section"
-                        class="nav-link link-dark d-flex gap-1 align-items-center"
-                    >
-                        <i data-lucide="user-search" class="sidebar-icon"></i>
-                        Search employees
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="#"
                         data-target="add-emp-section"
                         class="nav-link link-dark d-flex gap-1 align-items-center"
                     >
@@ -114,7 +104,6 @@
                 class="view-emp content-section active"
                 id="view-emp-section"
             >
-                <h4 class="h4 section-heading pb-md-3">Employees</h4>
                 <div class="d-flex justify-content-center py-2">
                     <div
                         id="spinner"
@@ -126,6 +115,28 @@
                     </div>
                 </div>
                 <div class="position-relative p-3 bg-white table-wrapper">
+                    <div class="row g-3">
+                        <div class="col-md-8 py-2">
+                            <h4 class="h4 section-heading">Employees</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <form class="d-flex" id="searchEmployeeForm">
+                                <input
+                                    id="employee_search_input"
+                                    class="form-control me-2"
+                                    type="search"
+                                    placeholder="Search..."
+                                    aria-label="Search"
+                                />
+                                <button
+                                    class="btn btn-outline-primary"
+                                    type="submit"
+                                >
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table id="employee-table" class="table table-striped">
                             <thead>
@@ -137,9 +148,16 @@
                                     <th>Designation</th>
                                     <th>Role</th>
                                     <th>Phone No</th>
-                                    <th>Present Address</th>
-                                    <th>Marital Status</th>
+                                    <th>Joining Date</th>
+                                    <th>NID</th>
                                     <th>Gender</th>
+                                    <th>Salary</th>
+                                    <th>Marital Status</th>
+                                    <th>Father's Name</th>
+                                    <th>Mother's Name</th>
+                                    <th>Present Address</th>
+                                    <th>Permanent Address</th>
+                                    <th>Nationality</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -487,6 +505,20 @@
                                                     </option>
                                                 </select>
                                             </div>
+                                            <div class="col-md-12">
+                                                <label
+                                                    for="salary"
+                                                    class="form-label"
+                                                    >Salary</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="salary"
+                                                    name="_salary"
+                                                    required
+                                                />
+                                            </div>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -825,6 +857,20 @@
                                                     Employee
                                                 </option>
                                             </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label
+                                                for="salary"
+                                                class="form-label"
+                                                >Salary</label
+                                            >
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                id="salary"
+                                                name="_salary"
+                                                required
+                                            />
                                         </div>
                                     </div>
                                 </fieldset>

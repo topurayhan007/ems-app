@@ -13,7 +13,7 @@ class EmployeeDBManager(IEmployeeRepository):
         cursor = db_connection.cursor()
         query = (
             "INSERT INTO employees "
-            "(name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, nationality, joining_date, present_address, permanent_address) "
+            "(name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, salary, nationality, joining_date, present_address, permanent_address) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         )
         employee_data = self.employee_object_to_tuple(employee)
@@ -84,7 +84,7 @@ class EmployeeDBManager(IEmployeeRepository):
         db_connection = self.db_manager.get_db_connection()
         cursor = db_connection.cursor(dictionary=True)
 
-        params = tuple(["%" + search_text + "%"] * 15)
+        params = tuple(["%" + search_text + "%"] * 17)
         query = (
             "SELECT * FROM employees WHERE "
             "name LIKE %s OR "
@@ -99,6 +99,7 @@ class EmployeeDBManager(IEmployeeRepository):
             "role LIKE %s OR "
             "dept LIKE %s OR "
             "designation LIKE %s OR "
+            "salary LIKE %s OR "
             "nationality LIKE %s OR "
             "joining_date LIKE %s OR "
             "present_address LIKE %s OR "
@@ -160,6 +161,7 @@ class EmployeeDBManager(IEmployeeRepository):
             "role=%s, "
             "dept=%s, "
             "designation=%s, "
+            "salary=%s, "
             "nationality=%s, "
             "joining_date=%s, "
             "present_address=%s, "
@@ -201,6 +203,7 @@ class EmployeeDBManager(IEmployeeRepository):
             employee._role,
             employee._dept,
             employee._designation,
+            employee._salary,
             employee._nationality,
             employee._joining_date,
             employee._present_address,
@@ -225,6 +228,7 @@ class EmployeeDBManager(IEmployeeRepository):
                 row['role'],
                 row['dept'],
                 row['designation'],
+                row['salary'],
                 row['nationality'],
                 row['joining_date'].strftime("%d-%m-%Y"),
                 row['present_address'],

@@ -84,6 +84,9 @@ main {
 .stat-card {
     border-radius: 10px;
 }
+#employee_search_input {
+    border-radius: 10px;
+}
 .table-wrapper {
     border-radius: 10px;
 }

@@ -1,8 +1,9 @@
-import { fetchEmployees } from "./api-calls.js";
+import { fetchEmployees, searchEmployees } from "./api-calls.js";
 import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const sidebarLinks = document.querySelectorAll("#sidebarMenu .nav-link");
+    let employee_data = [];
 
     const setActiveLink = (clickedLink) => {
         sidebarLinks.forEach((link) => link.classList.remove("active"));
@@ -51,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     showSpinner(true);
                     try {
                         const data = await fetchEmployees();
-                        console.log(data.employees);
+                        employee_data = data.employees;
+                        console.log(employee_data);
                         renderEmployeeTable(data.employees);
                         showSpinner(false);
                     } catch (error) {
@@ -95,4 +97,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 // fetch employee data and edit modal
             }
         });
+
+    // Search
+    const searchForm = document.getElementById("searchEmployeeForm");
+    const searchInput = document.getElementById("employee_search_input");
+
+    if (searchForm) {
+        searchForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            showSpinner(true);
+            try {
+                const data = await searchEmployees(query);
+                renderEmployeeTable(data.employees || []);
+            } catch (error) {
+                console.error(error);
+            }
+            showSpinner(false);
+        });
+    }
 });

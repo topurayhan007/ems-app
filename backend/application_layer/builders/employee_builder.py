@@ -15,6 +15,7 @@ class EmployeeBuilder:
         self._role = None
         self._dept = None
         self._designation = None
+        self._salary = None
         self._nationality = None
         self._joining_date = None
         self._present_address = None
@@ -71,6 +72,10 @@ class EmployeeBuilder:
     def add_designation(self, designation):
         self._designation = designation
         return self
+    
+    def add_salary(self, salary):
+        self._salary = salary
+        return self
 
     def add_nationality(self, nationality):
         self._nationality = nationality
@@ -104,6 +109,7 @@ class EmployeeBuilder:
             self._role,
             self._dept,
             self._designation,
+            self._salary,
             self._nationality,
             self._joining_date,
             self._present_address,
