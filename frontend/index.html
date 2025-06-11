@@ -116,7 +116,7 @@
                 </div>
                 <div class="position-relative p-3 bg-white table-wrapper">
                     <div class="row g-3">
-                        <div class="col-md-8 py-2">
+                        <div class="col-md-4 py-2">
                             <h4 class="h4 section-heading">Employees</h4>
                         </div>
                         <div class="col-md-4">
@@ -128,13 +128,14 @@
                                     placeholder="Search..."
                                     aria-label="Search"
                                 />
-                                <button
-                                    class="btn btn-outline-primary"
-                                    type="submit"
-                                >
-                                    Search
-                                </button>
                             </form>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary">
+                                    Add Employee
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -148,10 +149,11 @@
                                     <th>Designation</th>
                                     <th>Role</th>
                                     <th>Phone No</th>
+                                    <th>Salary</th>
                                     <th>Joining Date</th>
+                                    <th>Date of Birth</th>
                                     <th>NID</th>
                                     <th>Gender</th>
-                                    <th>Salary</th>
                                     <th>Marital Status</th>
                                     <th>Father's Name</th>
                                     <th>Mother's Name</th>
@@ -454,14 +456,20 @@
                                                     >
                                                         Sales Department
                                                     </option>
-                                                    <option value="HR">
-                                                        HR
+                                                    <option
+                                                        value="HR Department"
+                                                    >
+                                                        HR Department
                                                     </option>
-                                                    <option value="Finance">
-                                                        Finance
+                                                    <option
+                                                        value="Finance Department"
+                                                    >
+                                                        Finance Department
                                                     </option>
-                                                    <option value="Marketing">
-                                                        Marketing
+                                                    <option
+                                                        value="Marketing Department"
+                                                    >
+                                                        Marketing Department
                                                     </option>
                                                 </select>
                                             </div>
@@ -811,12 +819,18 @@
                                                 >
                                                     Sales Department
                                                 </option>
-                                                <option value="HR">HR</option>
-                                                <option value="Finance">
-                                                    Finance
+                                                <option value="HR Department">
+                                                    HR Department
                                                 </option>
-                                                <option value="Marketing">
-                                                    Marketing
+                                                <option
+                                                    value="Finance Department"
+                                                >
+                                                    Finance Department
+                                                </option>
+                                                <option
+                                                    value="Marketing Department"
+                                                >
+                                                    Marketing Department
                                                 </option>
                                             </select>
                                         </div>

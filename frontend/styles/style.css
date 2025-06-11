@@ -127,11 +127,17 @@ td:last-child {
 .btn-action:hover {
     color: white;
 }
-.btn-edit {
+.btn-view {
     background-color: rgb(43, 117, 255) !important;
 }
-.btn-edit:hover {
+.btn-view:hover {
     background-color: rgb(37, 100, 218) !important;
+}
+.btn-edit {
+    background-color: rgb(248, 198, 60) !important;
+}
+.btn-edit:hover {
+    background-color: rgb(236, 183, 35) !important;
 }
 .btn-delete {
     background-color: rgb(255, 50, 91) !important;
@@ -147,4 +153,7 @@ td:last-child {
 .card-wrapper .card {
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
+}
+#editFormModal .modal-content {
+    border-radius: 10px !important;
 }

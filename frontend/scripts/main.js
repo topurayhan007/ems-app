@@ -100,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Search
     const searchForm = document.getElementById("searchEmployeeForm");
-    const searchInput = document.getElementById("employee_search_input");
 
     if (searchForm) {
         searchForm.addEventListener("submit", async (e) => {
