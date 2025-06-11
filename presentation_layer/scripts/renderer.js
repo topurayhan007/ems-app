@@ -8,22 +8,15 @@ export const renderEmployeeTable = (employees) => {
             tr.innerHTML = `
                 <td>${emp._employee_id || "-"}</td>
                 <td>${emp._name || "-"}</td>
+                <td>${emp._date_of_birth || "-"}</td>
                 <td>${emp._email || "-"}</td>
                 <td>${emp._dept || "-"}</td>
                 <td>${emp._designation || "-"}</td>
                 <td>${emp._role || "-"}</td>
-                <td>${emp._phone_no || "-"}</td>
-                <td>${emp._salary || "-"}</td>
-                <td>${emp._joining_date || "-"}</td>
-                <td>${emp._date_of_birth || "-"}</td>
                 <td>${emp._nid || "-"}</td>
-                <td>${emp._gender || "-"}</td>
-                <td>${emp._marital_status || "-"}</td>
-                <td>${emp._father_name || "-"}</td>
-                <td>${emp._mother_name || "-"}</td>
-                <td>${emp._present_address || "-"}</td>
-                <td>${emp._permanent_address || "-"}</td>
-                <td>${emp._nationality || "-"}</td>
+                <td>${emp._phone_no || "-"}</td>
+                <td>${emp._joining_date || "-"}</td>
+                
                 
                 <td>
                     <div class="d-flex gap-2">
@@ -32,7 +25,7 @@ export const renderEmployeeTable = (employees) => {
                     }">View</button>
                         <button class="btn btn-action btn-edit" data-id="${
                             emp._employee_id
-                        }" data-bs-toggle="modal" data-bs-target="#editFormModal">Edit</button>
+                        }" data-bs-toggle="modal" data-bs-target="#editEmployeeFormModal">Edit</button>
                         <button class="btn btn-action btn-delete" data-id="${
                             emp._employee_id
                         }">Delete</button>

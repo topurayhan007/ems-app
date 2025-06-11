@@ -145,15 +145,17 @@ td:last-child {
 .btn-delete:hover {
     background-color: rgb(243, 50, 89) !important;
 }
-.card-wrapper .add-employee-form {
-    border-bottom-left-radius: 10px !important;
-    border-bottom-right-radius: 10px !important;
-}
-.card-wrapper .card-header,
-.card-wrapper .card {
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
-}
-#editFormModal .modal-content {
+#addEmployeeFormModal .modal-content,
+#editEmployeeFormModal .modal-content {
     border-radius: 10px !important;
+    border: 0px;
+}
+#addEmployeeFormModal .modal-header,
+#editEmployeeFormModal .modal-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#addEmployeeFormModal .modal-header .btn-close,
+#editEmployeeFormModal .modal-header .btn-close {
+    color: white !important;
 }
