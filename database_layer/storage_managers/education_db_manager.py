@@ -2,9 +2,11 @@ import mysql.connector
 from application_layer.classes.education import EducationalDegree
 from application_layer.interfaces.database_manager_interface import IDatabaseManager
 from application_layer.interfaces.repository_interface import IRepository
+from application_layer.mappers.education_mapper import EducationMapper
 class EducationDBManager(IRepository):
-    def __init__(self, db_manager: IDatabaseManager):
+    def __init__(self, db_manager: IDatabaseManager, education_mapper: EducationMapper):
         self.db_manager = db_manager
+        self.education_mapper = education_mapper
 
     def create(self, degree: EducationalDegree):
         db_connection = self.db_manager.get_db_connection()
@@ -131,16 +133,6 @@ class EducationDBManager(IRepository):
     def db_data_to_degree_list(self, data) -> list[EducationalDegree]:
         degrees: list[EducationalDegree] = []
         for row in data:
-            degree = EducationalDegree(
-                row['degree_id'],
-                row['employee_id'],
-                row['degree_name'],
-                row['institute_name'],
-                row['major'],
-                row['location'],
-                row['gpa'],
-                row['gpa_scale'],
-                row['year_of_passing']                
-            )
+            degree = self.education_mapper._db_data_to_obj(row)
             degrees.append(degree)
         return degrees

@@ -2,11 +2,16 @@ from application_layer.classes.employee import Employee
 
 class EmployeeMapper:
     @staticmethod
-    def __to_obj(employee: dict) -> Employee:
+    def _to_obj(employee: dict) -> Employee:
+        def format_date(date_value):
+            if hasattr(date_value, 'strftime'):  
+                return date_value.strftime("%d-%m-%Y")
+            return date_value 
+        
         return Employee(
             employee["_employee_id"],
             employee["_name"],
-            employee["_date_of_birth"].strftime("%d-%m-%Y"),
+            format_date(employee["_date_of_birth"]),
             employee["_nid"],
             employee["_email"],
             employee["_phone_no"],
@@ -19,13 +24,41 @@ class EmployeeMapper:
             employee["_designation"],
             employee["_salary"],
             employee["_nationality"],
-            employee["_joining_date"].strftime("%d-%m-%Y"),
+            format_date(employee["_joining_date"]),
             employee["_present_address"],
             employee["_permanent_address"]
         )
     
     @staticmethod
-    def __to_tuple(employee: Employee):
+    def _db_data_to_obj(employee: dict) -> Employee:
+        def format_date(date_value):
+            if hasattr(date_value, 'strftime'):  
+                return date_value.strftime("%d-%m-%Y")
+            return date_value 
+        
+        return Employee(
+            employee["employee_id"],
+            employee["name"],
+            format_date(employee["date_of_birth"]),
+            employee["nid"],
+            employee["email"],
+            employee["phone_no"],
+            employee["gender"],
+            employee["father_name"],
+            employee["mother_name"],
+            employee["marital_status"],
+            employee["role"],
+            employee["dept"],
+            employee["designation"],
+            employee["salary"],
+            employee["nationality"],
+            format_date(employee["joining_date"]),
+            employee["present_address"],
+            employee["permanent_address"]
+        )
+    
+    @staticmethod
+    def _to_tuple(employee: Employee):
         return (
             employee._name,
             employee._date_of_birth,

@@ -3,10 +3,12 @@ import mysql.connector
 from application_layer.classes.employee import Employee
 from application_layer.interfaces.database_manager_interface import IDatabaseManager
 from application_layer.interfaces.employee_repository_interface import IEmployeeRepository
+from application_layer.mappers.employee_mapper import EmployeeMapper
 
 class EmployeeDBManager(IEmployeeRepository):
-    def __init__(self, db_manager: IDatabaseManager):
+    def __init__(self, db_manager: IDatabaseManager, employee_mapper: EmployeeMapper):
         self.db_manager = db_manager
+        self.employee_mapper = employee_mapper
 
     def create(self, employee:Employee):
         db_connection = self.db_manager.get_db_connection()
@@ -16,7 +18,7 @@ class EmployeeDBManager(IEmployeeRepository):
             "(name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, salary, nationality, joining_date, present_address, permanent_address) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         )
-        employee_data = self.employee_object_to_tuple(employee)
+        employee_data = self.employee_mapper._to_tuple(employee)
 
         try:
             cursor.execute(query, employee_data)
@@ -169,7 +171,7 @@ class EmployeeDBManager(IEmployeeRepository):
             "WHERE employee_id=%s"
         )
 
-        updated_employee_data = list(self.employee_object_to_tuple(employee))
+        updated_employee_data = list(self.employee_mapper._to_tuple(employee))
         updated_employee_data.append(employee_id)
         tuple(updated_employee_data)
 
@@ -214,26 +216,7 @@ class EmployeeDBManager(IEmployeeRepository):
     def db_data_to_employee_list(self, data) -> list[Employee]:
         employees: list[Employee] = []
         for row in data:
-            employee = Employee(
-                row['employee_id'],
-                row['name'],
-                row['date_of_birth'].strftime("%d-%m-%Y"),
-                row['nid'],
-                row['email'],
-                row['phone_no'],
-                row['gender'],
-                row['father_name'],
-                row['mother_name'],
-                row['marital_status'],
-                row['role'],
-                row['dept'],
-                row['designation'],
-                row['salary'],
-                row['nationality'],
-                row['joining_date'].strftime("%d-%m-%Y"),
-                row['present_address'],
-                row['permanent_address']
-            )
+            employee = self.employee_mapper._db_data_to_obj(row)            
             employees.append(employee)
         return employees
     

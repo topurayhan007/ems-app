@@ -2,9 +2,11 @@ import mysql.connector
 from application_layer.classes.experience import Experience
 from application_layer.interfaces.database_manager_interface import IDatabaseManager
 from application_layer.interfaces.repository_interface import IRepository
+from application_layer.mappers.experience_mapper import ExperienceMapper
 class ExperienceDBManager(IRepository):
-    def __init__(self, db_manager: IDatabaseManager):
+    def __init__(self, db_manager: IDatabaseManager, experience_mapper: ExperienceMapper):
         self.db_manager = db_manager
+        self.experience_mapper = experience_mapper
 
     def create(self, experience: Experience):
         db_connection = self.db_manager.get_db_connection()
@@ -127,14 +129,6 @@ class ExperienceDBManager(IRepository):
     def db_data_to_experience_list(self, data) -> list[Experience]:
         experiences: list[Experience] = []
         for row in data:
-            experience = Experience(
-                row['experience_id'],
-                row['employee_id'],
-                row['company_name'],
-                row['position'],
-                row['joining_date'].strftime("%d-%m-%Y"),
-                row['ending_date'].strftime("%d-%m-%Y"),
-                row['location']
-            )
+            experience = self.experience_mapper._db_data_to_obj(row)
             experiences.append(experience)
         return experiences

@@ -13,12 +13,18 @@ from application_layer.classes.experience import Experience
 from application_layer.interfaces.employee_service_interface import IEmployeeService
 from application_layer.interfaces.education_service_interface import IEducationService
 from application_layer.interfaces.experience_service_interface import IExperienceService
+from application_layer.mappers.employee_mapper import EmployeeMapper
+from application_layer.mappers.education_mapper import EducationMapper
+from application_layer.mappers.experience_mapper import ExperienceMapper
 
 class APIRequestHandler(BaseHTTPRequestHandler):
-    def __init__(self, employee_service: IEmployeeService, education_service: IEducationService, experience_service: IExperienceService, *args, **kwargs):
+    def __init__(self, employee_service: IEmployeeService, education_service: IEducationService, experience_service: IExperienceService, employee_mapper: EmployeeMapper, education_mapper: EducationMapper, experience_mapper: ExperienceMapper, *args, **kwargs):
         self.employee_service = employee_service
         self.education_service = education_service
         self.experience_service = experience_service
+        self.employee_mapper = employee_mapper
+        self.education_mapper = education_mapper
+        self.experience_mapper = experience_mapper
         super().__init__(*args, **kwargs)
 
     def _set_cors_headers(self):
@@ -94,21 +100,21 @@ class APIRequestHandler(BaseHTTPRequestHandler):
             # Employee API
             # http://localhost:8000/api/employees
             if self.path == "/api/employees":
-                employee = self.__json_to_employee_obj(input_data)
+                employee = self.employee_mapper._to_obj(input_data)
                 result = self.employee_service.add_employee(employee)
                 self._send_response(201, "Created", {"result": result})
             
             # Education/Degress API
             # http://localhost:8000/api/degrees
             elif self.path == "/api/degrees":
-                degree = self.__json_to_degree_obj(input_data)
+                degree = self.education_mapper._to_obj(input_data)
                 result = self.education_service.add_degree(degree)
                 self._send_response(201, "Created", {"result": result})
 
             # Experiences API
             # http://localhost:8000/api/experiences
             elif self.path == "/api/experiences":
-                experience = self.__json_to_experience_obj(input_data)                
+                experience = self.experience_mapper._to_obj(input_data)                
                 result = self.experience_service.add_experience(experience)
                 self._send_response(201, "Created", {"result": result})
 
@@ -132,7 +138,7 @@ class APIRequestHandler(BaseHTTPRequestHandler):
             # http://localhost:8000/api/employees/{id}
             if self.path.startswith("/api/employees/"):
                 employee_id = self.path.split("employees/")[1]
-                employee = self.__json_to_employee_obj(input_data)
+                employee = self.employee_mapper._to_obj(input_data)
                 result = self.employee_service.update_an_employee(employee_id, employee)
                 self._send_response(201, "Created", {"result": result})
             
@@ -140,7 +146,7 @@ class APIRequestHandler(BaseHTTPRequestHandler):
             # http://localhost:8000/api/degrees/{id}
             elif self.path.startswith("/api/degrees/"):
                 degree_id = self.path.split("degrees/")[1]
-                degree = self.__json_to_degree_obj(input_data)
+                degree = self.education_mapper._to_obj(input_data)
                 result = self.education_service.update_a_degree_of_an_employee(degree_id, degree)
                 self._send_response(201, "Created", {"result": result})
 
@@ -148,7 +154,7 @@ class APIRequestHandler(BaseHTTPRequestHandler):
             # http://localhost:8000/api/experiences/{id}
             elif self.path.startswith("/api/experiences/"):
                 experience_id = self.path.split("experiences/")[1]
-                experience = self.__json_to_experience_obj(input_data)
+                experience = self.experience_mapper._to_obj(input_data)
                 result = self.experience_service.update_an_experience_of_an_employee(experience_id, experience)
                 self._send_response(201, "Created", {"result": result})
 
