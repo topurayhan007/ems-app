@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     selectedEmployee._employee_id
                 );
                 const experiences = experience_data.experiences;
+                console.log(experiences);
 
                 const education_fields_parent = document.getElementById(
                     "edit_education_fields"
@@ -455,7 +456,7 @@ const createExperienceFormFields = (experience = null, index = null) => {
     const formId = `experience-${index}`;
 
     const formDiv = document.createElement("div");
-    formDiv.className = "row g-3 mt-0 degree-form";
+    formDiv.className = "row g-3 mt-0 experience-form";
     formDiv.id = formId;
     formDiv.innerHTML = `
         <!-- Company Name -->
@@ -481,7 +482,9 @@ const createExperienceFormFields = (experience = null, index = null) => {
             <label for="edit_joining_date_${index}" class="form-label">Joining Date</label>
             <input type="date" class="form-control" id="edit_joining_date_${index}" 
                 name="_joining_date" value="${
-                    experience?._joining_date || ""
+                    experience?._joining_date
+                        ? convertDateToYearMonthDay(experience?._joining_date)
+                        : ""
                 }" required />
         </div>
 
@@ -490,12 +493,14 @@ const createExperienceFormFields = (experience = null, index = null) => {
             <label for="edit_ending_date_${index}" class="form-label">Ending Date</label>
             <input type="date" class="form-control" id="edit_ending_date_${index}" 
                 name="_ending_date" value="${
-                    experience?._ending_date || ""
+                    experience?._ending_date
+                        ? convertDateToYearMonthDay(experience?._ending_date)
+                        : ""
                 }" required />
         </div>
         
         <!-- Location -->
-        <div class="col-md-6">
+        <div class="col-md-12">
             <label for="edit_location_${index}" class="form-label">Location</label>
             <input type="text" class="form-control" id="edit_location_${index}" 
                 name="_location" value="${
@@ -505,13 +510,14 @@ const createExperienceFormFields = (experience = null, index = null) => {
         
        
         <div class="col-12">
-            <button class="btn btn-sm btn-outline-danger remove-degree-btn" id="removeDegreeButton">
+            <button class="btn btn-sm btn-outline-danger remove-experience-btn" id="removeExperienceButton">
                 - Remove Experience
             </button>
         </div>        
 
         <hr class="mt-5 mb-4">
     `;
+    return formDiv;
 };
 
 const getEditEmployeeFormData = () => {
@@ -520,9 +526,14 @@ const getEditEmployeeFormData = () => {
 
     const employeeData = {};
     for (const [key, value] of formData.entries()) {
-        employeeData[key] = value;
+        if (key === "_employee_id" || key === "_nid" || key === "_salary") {
+            employeeData[key] = parseInt(value);
+        } else {
+            employeeData[key] = value;
+        }
     }
 
+    // Degree
     const degreeFieldNames = [
         "_degree_name",
         "_institute_name",
@@ -551,8 +562,39 @@ const getEditEmployeeFormData = () => {
             degrees.push(degreeObj);
         });
 
+    // Experience
+    const experienceFieldNames = [
+        "_company_name",
+        "_position",
+        "_joining_date",
+        "_ending_date",
+        "_location",
+    ];
+
+    experienceFieldNames.forEach((field) => {
+        if (field !== "_joining_date") {
+            delete employeeData[field];
+        }
+    });
+
+    const experiences = [];
+    document
+        .querySelectorAll("#edit_experience_fields_container .experience-form")
+        .forEach((experienceDiv) => {
+            const experienceInputs =
+                experienceDiv.querySelectorAll("input, select");
+            const experienceObj = {};
+            experienceInputs.forEach((input) => {
+                if (input.name) {
+                    experienceObj[input.name] = input.value;
+                }
+            });
+            experiences.push(experienceObj);
+        });
+
     return {
-        employeeData: employeeData,
+        employee: employeeData,
         degrees: degrees,
+        experiences: experiences,
     };
 };
