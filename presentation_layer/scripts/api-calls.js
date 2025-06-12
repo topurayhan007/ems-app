@@ -10,6 +10,15 @@ export const fetchEmployees = async () => {
     return data;
 };
 
+export const fetchEmployeeByID = async () => {
+    const response = await fetch(`${baseURL}/api/employees/${employeeId}`);
+    if (!response.ok) {
+        throw new Error("Something went wrong!");
+    }
+    const data = await response.json();
+    return data;
+};
+
 export const searchEmployees = async (query) => {
     const response = await fetch(
         `${baseURL}/api/employees?q=${encodeURIComponent(query)}`

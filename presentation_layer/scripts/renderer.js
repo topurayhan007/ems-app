@@ -26,7 +26,7 @@ export const renderEmployeeTable = (employees) => {
                         <button class="btn btn-action btn-edit" data-id="${
                             emp._employee_id
                         }" data-bs-toggle="modal" data-bs-target="#editEmployeeFormModal">Edit</button>
-                        <button class="btn btn-action btn-delete" data-id="${
+                        <button class="btn btn-action btn-delete" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-id="${
                             emp._employee_id
                         }">Delete</button>
                     </div>

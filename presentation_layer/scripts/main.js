@@ -1,4 +1,9 @@
-import { fetchDegrees, fetchEmployees, searchEmployees } from "./api-calls.js";
+import {
+    fetchDegrees,
+    fetchEmployees,
+    searchEmployees,
+    deleteEmployee,
+} from "./api-calls.js";
 import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -203,9 +208,31 @@ document.addEventListener("DOMContentLoaded", function () {
         .addEventListener("click", (e) => {
             if (e.target.classList.contains("btn-delete")) {
                 const employeeId = e.target.getAttribute("data-id");
-                // TODO: Open edit modal
-                console.log("Edit clicked for employee ID:", employeeId);
-                // fetch employee data and edit modal
+
+                const modalElement = document.getElementById(
+                    "deleteEmployeeModal"
+                );
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                // Delete Employee Button
+                document
+                    .getElementById("deleteEmployeeButton")
+                    .addEventListener("click", async (e) => {
+                        try {
+                            const result = await deleteEmployee(employeeId);
+
+                            if (result.result == 1) {
+                                modal.hide();
+                                setTimeout(() => {
+                                    window.alert("Deleted Successfully!");
+                                    window.location.reload(true);
+                                }, 400);
+                            } else {
+                                window.alert("Something went wrong!");
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    });
             }
         });
 
