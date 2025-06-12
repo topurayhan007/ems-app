@@ -293,6 +293,9 @@ document.addEventListener("DOMContentLoaded", function () {
             );
             save_button.classList.add("disabled");
 
+            const close_button = document.getElementById("edit_form_close_btn");
+            close_button.classList.add("disabled");
+
             try {
                 // Update the employee data
                 await updateEmployee(employee_id, data.employee);
@@ -330,12 +333,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 spinner.classList.add("d-none");
                 save_button.classList.remove("disabled");
+                close_button.classList.remove("disabled");
 
                 alert("Employee Updated Successfully!");
                 location.reload();
             } catch (error) {
                 spinner.classList.add("d-none");
                 save_button.classList.remove("disabled");
+                close_button.classList.remove("disabled");
 
                 console.log(error);
                 alert("Something went wrong!");
