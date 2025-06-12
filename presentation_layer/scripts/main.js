@@ -1,8 +1,9 @@
 import {
-    fetchDegrees,
     fetchEmployees,
     searchEmployees,
     deleteEmployee,
+    fetchExperiences,
+    fetchDegrees,
 } from "./api-calls.js";
 import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 
@@ -99,17 +100,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
                 const degrees = degrees_data.degrees;
 
-                const fields_parent = document.getElementById(
+                // Fetch experiences data
+                const experience_data = await fetchExperiences(
+                    selectedEmployee._employee_id
+                );
+                const experiences = experience_data.experiences;
+
+                const education_fields_parent = document.getElementById(
                     "edit_education_fields"
                 );
-                const fields_wrapper = document.getElementById(
+                const education_fields_wrapper = document.getElementById(
                     "edit_education_fields_container"
                 );
 
+                const experience_fields_parent = document.getElementById(
+                    "edit_experience_fields"
+                );
+                const experience_fields_wrapper = document.getElementById(
+                    "edit_experience_fields_container"
+                );
+
                 // Add "Add Degree" button
-                const addButtonContainer = document.createElement("div");
-                addButtonContainer.className = "col-12 mt-3";
-                addButtonContainer.innerHTML = `
+                const addEducationButtonContainer =
+                    document.createElement("div");
+                addEducationButtonContainer.className = "col-12 mt-3";
+                addEducationButtonContainer.innerHTML = `
                     <button type="button" class="btn btn-sm btn-outline-primary" id="addDegreeButton">
                         ${
                             degrees.length > 0
@@ -119,43 +134,85 @@ document.addEventListener("DOMContentLoaded", function () {
                     </button>
                 `;
 
+                // Add "Add Experience" button
+                const addExperienceButtonContainer =
+                    document.createElement("div");
+                addExperienceButtonContainer.className = "col-12 mt-3";
+                addExperienceButtonContainer.innerHTML = `
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addExperienceButton">
+                        ${
+                            degrees.length > 0
+                                ? "+ Add Another Experience"
+                                : "+ Add a Experience"
+                        }
+                    </button>
+                `;
+
                 if (degrees.length > 0) {
-                    fields_wrapper.innerHTML = "";
-                    fields_parent.classList.remove("d-none");
+                    education_fields_wrapper.innerHTML = "";
+                    education_fields_parent.classList.remove("d-none");
 
                     degrees.forEach((degree, index) => {
-                        fields_wrapper.appendChild(
+                        education_fields_wrapper.appendChild(
                             createDegreeFormFields(degree, index)
                         );
 
-                        fields_wrapper.appendChild(addButtonContainer);
+                        education_fields_wrapper.appendChild(
+                            addEducationButtonContainer
+                        );
                     });
                 } else {
-                    fields_wrapper.innerHTML = "";
-                    fields_parent.classList.remove("d-none");
-                    fields_wrapper.appendChild(addButtonContainer);
+                    education_fields_wrapper.innerHTML = "";
+                    education_fields_parent.classList.remove("d-none");
+                    education_fields_wrapper.appendChild(
+                        addEducationButtonContainer
+                    );
+                }
+
+                if (experiences.length > 0) {
+                    experience_fields_wrapper.innerHTML = "";
+                    experience_fields_parent.classList.remove("d-none");
+
+                    experiences.forEach((experience, index) => {
+                        experience_fields_wrapper.appendChild(
+                            createExperienceFormFields(experience, index)
+                        );
+
+                        experience_fields_wrapper.appendChild(
+                            addExperienceButtonContainer
+                        );
+                    });
+                } else {
+                    experience_fields_wrapper.innerHTML = "";
+                    experience_fields_parent.classList.remove("d-none");
+                    experience_fields_wrapper.appendChild(
+                        addExperienceButtonContainer
+                    );
                 }
 
                 // Add degree button function
                 document
                     .getElementById("addDegreeButton")
                     .addEventListener("click", () => {
-                        console.log("add-btn");
-
-                        if (fields_wrapper.lastChild.id === "addDegreeButton") {
-                            fields_wrapper.removeChild(
-                                fields_wrapper.lastChild
+                        if (
+                            education_fields_wrapper.lastChild.id ===
+                            "addDegreeButton"
+                        ) {
+                            education_fields_wrapper.removeChild(
+                                education_fields_wrapper.lastChild
                             );
                         }
                         const currentCount =
-                            fields_wrapper.querySelectorAll(
+                            education_fields_wrapper.querySelectorAll(
                                 ".degree-form"
                             ).length;
 
-                        fields_wrapper.appendChild(
+                        education_fields_wrapper.appendChild(
                             createDegreeFormFields(null, currentCount)
                         );
-                        fields_wrapper.appendChild(addButtonContainer);
+                        education_fields_wrapper.appendChild(
+                            addEducationButtonContainer
+                        );
                     });
 
                 // Remove degree button function
@@ -166,6 +223,46 @@ document.addEventListener("DOMContentLoaded", function () {
                             const degreeForm = e.target.closest(".degree-form");
                             if (degreeForm) {
                                 degreeForm.remove();
+                            }
+                        }
+                    });
+
+                // Add experience button function
+                document
+                    .getElementById("addExperienceButton")
+                    .addEventListener("click", () => {
+                        if (
+                            experience_fields_wrapper.lastChild.id ===
+                            "addExperienceButton"
+                        ) {
+                            experience_fields_wrapper.removeChild(
+                                experience_fields_wrapper.lastChild
+                            );
+                        }
+                        const currentCount =
+                            experience_fields_wrapper.querySelectorAll(
+                                ".experience-form"
+                            ).length;
+
+                        experience_fields_wrapper.appendChild(
+                            createExperienceFormFields(null, currentCount)
+                        );
+                        experience_fields_wrapper.appendChild(
+                            addExperienceButtonContainer
+                        );
+                    });
+
+                // Remove experience button function
+                document
+                    .getElementById("edit_experience_fields_container")
+                    .addEventListener("click", function (e) {
+                        if (
+                            e.target.classList.contains("remove-experience-btn")
+                        ) {
+                            const experienceForm =
+                                e.target.closest(".experience-form");
+                            if (experienceForm) {
+                                experienceForm.remove();
                             }
                         }
                     });
@@ -278,9 +375,7 @@ const setValuesToEmployeeEditFormFields = (selectedEmployee) => {
 
 // Function to create a degree form fields
 const createDegreeFormFields = (degree = null, index = null) => {
-    const formId =
-        index !== null ? `degree-${index}` : `degree-new-${Date.now()}`;
-    const isExisting = degree !== null;
+    const formId = `degree-${index}`;
 
     const formDiv = document.createElement("div");
     formDiv.className = "row g-3 mt-0 degree-form";
@@ -355,6 +450,70 @@ const createDegreeFormFields = (degree = null, index = null) => {
     return formDiv;
 };
 
+// Function to create a experience form fields
+const createExperienceFormFields = (experience = null, index = null) => {
+    const formId = `experience-${index}`;
+
+    const formDiv = document.createElement("div");
+    formDiv.className = "row g-3 mt-0 degree-form";
+    formDiv.id = formId;
+    formDiv.innerHTML = `
+        <!-- Company Name -->
+        <div class="col-md-6">
+            <label for="edit_company_name_${index}" class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="edit_company_name_${index}" 
+                name="_company_name" value="${
+                    experience?._company_name || ""
+                }" required />
+        </div>
+        
+        <!-- Position -->
+        <div class="col-md-6">
+            <label for="edit_position_${index}" class="form-label">Position</label>
+            <input type="text" class="form-control" id="edit_position_${index}" 
+                name="_position" value="${
+                    experience?._position || ""
+                }" required />
+        </div>
+        
+        <!-- Joining Date -->
+        <div class="col-md-6">
+            <label for="edit_joining_date_${index}" class="form-label">Joining Date</label>
+            <input type="date" class="form-control" id="edit_joining_date_${index}" 
+                name="_joining_date" value="${
+                    experience?._joining_date || ""
+                }" required />
+        </div>
+
+        <!-- Ending Date -->
+        <div class="col-md-6">
+            <label for="edit_ending_date_${index}" class="form-label">Ending Date</label>
+            <input type="date" class="form-control" id="edit_ending_date_${index}" 
+                name="_ending_date" value="${
+                    experience?._ending_date || ""
+                }" required />
+        </div>
+        
+        <!-- Location -->
+        <div class="col-md-6">
+            <label for="edit_location_${index}" class="form-label">Location</label>
+            <input type="text" class="form-control" id="edit_location_${index}" 
+                name="_location" value="${
+                    experience?._location || ""
+                }" required />
+        </div>
+        
+       
+        <div class="col-12">
+            <button class="btn btn-sm btn-outline-danger remove-degree-btn" id="removeDegreeButton">
+                - Remove Experience
+            </button>
+        </div>        
+
+        <hr class="mt-5 mb-4">
+    `;
+};
+
 const getEditEmployeeFormData = () => {
     const form = document.getElementById("editEmployeeForm");
     const formData = new FormData(form);
@@ -363,6 +522,20 @@ const getEditEmployeeFormData = () => {
     for (const [key, value] of formData.entries()) {
         employeeData[key] = value;
     }
+
+    const degreeFieldNames = [
+        "_degree_name",
+        "_institute_name",
+        "_major",
+        "_location",
+        "_gpa",
+        "_gpa_scale",
+        "_year_of_passing",
+    ];
+
+    degreeFieldNames.forEach((field) => {
+        delete employeeData[field];
+    });
 
     const degrees = [];
     document
