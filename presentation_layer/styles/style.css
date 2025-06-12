@@ -159,3 +159,10 @@ td:last-child {
 #editEmployeeFormModal .modal-header .btn-close {
     color: white !important;
 }
+
+#edit_confirm_btn_spinner {
+    width: var(--size-md);
+    height: var(--size-md);
+    border-width: 2px !important;
+    margin-right: 5px;
+}

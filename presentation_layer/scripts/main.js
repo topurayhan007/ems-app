@@ -2,8 +2,13 @@ import {
     fetchEmployees,
     searchEmployees,
     deleteEmployee,
-    fetchExperiences,
     fetchDegrees,
+    deleteDegree,
+    fetchExperiences,
+    deleteExperience,
+    addExperience,
+    addDegree,
+    updateEmployee,
 } from "./api-calls.js";
 import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 
@@ -273,12 +278,68 @@ document.addEventListener("DOMContentLoaded", function () {
     // Edit form submission
     document
         .getElementById("editEmployeeForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", async (e) => {
             e.preventDefault();
             const data = getEditEmployeeFormData();
             const employee_id =
                 document.getElementById("edit_employee_id").value;
             console.log(data);
+
+            const spinner = document.getElementById("edit_confirm_btn_spinner");
+            spinner.classList.remove("d-none");
+
+            const save_button = document.getElementById(
+                "edit-employee-submit-btn"
+            );
+            save_button.classList.add("disabled");
+
+            try {
+                // Update the employee data
+                await updateEmployee(employee_id, data.employee);
+
+                // Fetch existing degrees and delete one by one
+                const degrees_res = await fetchDegrees(employee_id);
+                const degrees = degrees_res.degrees;
+                for (let deg of degrees) {
+                    await deleteDegree(deg._degree_id);
+                }
+
+                // Fetch existing experiences and delete one by one
+                const exps_res = await fetchExperiences(employee_id);
+                const experiences = exps_res.experiences;
+                for (let exp of experiences) {
+                    await deleteExperience(exp._experience_id);
+                }
+
+                // Add new updated degrees
+                for (let deg of data.degrees) {
+                    await addDegree({
+                        _degree_id: null,
+                        _employee_id: employee_id,
+                        ...deg,
+                    });
+                }
+
+                // Add new updated experiences
+                for (let exp of data.experiences) {
+                    await addExperience({
+                        _experience_id: null,
+                        _employee_id: employee_id,
+                        ...exp,
+                    });
+                }
+                spinner.classList.add("d-none");
+                save_button.classList.remove("disabled");
+
+                alert("Employee Updated Successfully!");
+                location.reload();
+            } catch (error) {
+                spinner.classList.add("d-none");
+                save_button.classList.remove("disabled");
+
+                console.log(error);
+                alert("Something went wrong!");
+            }
         });
 
     // Delete Employee Button
@@ -382,6 +443,7 @@ const createDegreeFormFields = (degree = null, index = null) => {
     formDiv.className = "row g-3 mt-0 degree-form";
     formDiv.id = formId;
     formDiv.innerHTML = `
+
         <!-- Degree Name -->
         <div class="col-md-6">
             <label for="edit_degree_name_${index}" class="form-label">Degree Name</label>
@@ -409,8 +471,8 @@ const createDegreeFormFields = (degree = null, index = null) => {
         
         <!-- Location -->
         <div class="col-md-6">
-            <label for="edit_location_${index}" class="form-label">Location</label>
-            <input type="text" class="form-control" id="edit_location_${index}" 
+            <label for="edit_degree_location_${index}" class="form-label">Location</label>
+            <input type="text" class="form-control" id="edit_degree_location_${index}" 
                 name="_location" value="${degree?._location || ""}" required />
         </div>
         
@@ -479,8 +541,8 @@ const createExperienceFormFields = (experience = null, index = null) => {
         
         <!-- Joining Date -->
         <div class="col-md-6">
-            <label for="edit_joining_date_${index}" class="form-label">Joining Date</label>
-            <input type="date" class="form-control" id="edit_joining_date_${index}" 
+            <label for="edit_exp_joining_date_${index}" class="form-label">Joining Date</label>
+            <input type="date" class="form-control" id="edit_exp_joining_date_${index}" 
                 name="_joining_date" value="${
                     experience?._joining_date
                         ? convertDateToYearMonthDay(experience?._joining_date)
