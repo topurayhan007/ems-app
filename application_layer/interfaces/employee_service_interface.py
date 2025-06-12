@@ -7,6 +7,10 @@ class IEmployeeService(ABC):
         pass
 
     @abstractmethod
+    def get_employee_by_id(self, employee_id) -> Employee:
+        pass
+
+    @abstractmethod
     def get_all_employee(self) -> list[Employee]:
         pass
 

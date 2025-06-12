@@ -86,9 +86,10 @@ class EmployeeDBManager(IEmployeeRepository):
         db_connection = self.db_manager.get_db_connection()
         cursor = db_connection.cursor(dictionary=True)
 
-        params = tuple(["%" + search_text + "%"] * 17)
+        params = tuple(["%" + search_text + "%"] * 18)
         query = (
             "SELECT * FROM employees WHERE "
+            "employee_id LIKE %s OR "
             "name LIKE %s OR "
             "date_of_birth LIKE %s OR "
             "nid LIKE %s OR "

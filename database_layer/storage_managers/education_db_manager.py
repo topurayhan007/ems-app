@@ -18,7 +18,7 @@ class EducationDBManager(IRepository):
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         )
 
-        degree_data = self.degree_object_to_tuple(degree)
+        degree_data = self.education_mapper._to_tuple(degree)
 
         try:
             cursor.execute(add_degree_query, degree_data)
@@ -98,7 +98,7 @@ class EducationDBManager(IRepository):
             "WHERE degree_id=%s"
         )
 
-        updated_degree_data = list(self.degree_object_to_tuple(degree))
+        updated_degree_data = list(self.education_mapper._to_tuple(degree))
         updated_degree_data.append(degree_id)
         tuple(updated_degree_data)
         

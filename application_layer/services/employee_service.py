@@ -11,6 +11,10 @@ class EmployeeService(IEmployeeService):
         result = self.employee_db_manager.create(employee)
         return result
     
+    def get_employee_by_id(self, employee_id) -> Employee:
+        result = self.employee_db_manager.get(employee_id)
+        return result
+
     def get_all_employee(self)-> list[Employee]:
         employees = self.employee_db_manager.get_all()
         return employees

@@ -18,7 +18,7 @@ class ExperienceDBManager(IRepository):
             "VALUES (%s, %s, %s, %s, %s, %s)"
         )
 
-        experience_data = self.experience_object_to_tuple(experience)
+        experience_data = self.experience_mapper._to_tuple(experience)
 
         try:
             cursor.execute(query, experience_data)
@@ -96,7 +96,7 @@ class ExperienceDBManager(IRepository):
             "WHERE experience_id=%s"
         )
 
-        updated_experience_data = list(self.experience_object_to_tuple(experience))
+        updated_experience_data = list(self.experience_mapper._to_tuple(experience))
         updated_experience_data.append(experience_id)
         tuple(updated_experience_data)
 

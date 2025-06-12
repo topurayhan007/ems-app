@@ -57,6 +57,13 @@ class APIRequestHandler(BaseHTTPRequestHandler):
                 employee_dict = [employee.__dict__ for employee in employees] if employees else []
                 self._send_response(200, "OK", {"employees": employee_dict})
             
+            # http://localhost:8000/api/employees/{id}
+            elif self.path.startswith("/api/employees/"):
+                employee_id = self.path.split("employees/")[1]
+                employees = self.employee_service.get_employee_by_id(employee_id)
+                employee_dict = [employee.__dict__ for employee in employees] if employees else []
+                self._send_response(200, "OK", {"employee": employee_dict})
+            
             # http://localhost:8000/api/employees?q={input}
             elif self.path.startswith("/api/employees?q="):
                 search_text = self.path.split("?q=")[1]
@@ -192,49 +199,4 @@ class APIRequestHandler(BaseHTTPRequestHandler):
             self._send_response(500, "Server Error", {"error": str(e)})
         
 
-    def __json_to_employee_obj(self, employee) -> Employee:
-        return Employee(
-            employee["_employee_id"],
-            employee["_name"],
-            employee["_date_of_birth"],
-            employee["_nid"],
-            employee["_email"],
-            employee["_phone_no"],
-            employee["_gender"],
-            employee["_father_name"],
-            employee["_mother_name"],
-            employee["_marital_status"],
-            employee["_role"],
-            employee["_dept"],
-            employee["_designation"],
-            employee["_salary"],
-            employee["_nationality"],
-            employee["_joining_date"],
-            employee["_present_address"],
-            employee["_permanent_address"]
-        )
     
-    def __json_to_degree_obj(self, degree) -> EducationalDegree:
-        return EducationalDegree(
-            degree["_degree_id"],
-            degree["_employee_id"],
-            degree["_degree_name"],
-            degree["_institute_name"],
-            degree["_major"],
-            degree["_location"],
-            degree["_gpa"],
-            degree["_gpa_scale"],
-            degree["_year_of_passing"]
-        )
-    
-    def __json_to_experience_obj(self, experience) -> Experience:
-        return Experience(
-            experience["_experience_id"],
-            experience["_employee_id"],
-            experience["_company_name"],
-            experience["_position"],
-            experience["_joining_date"],
-            experience["_ending_date"],
-            experience["_location"]
-        )
-
