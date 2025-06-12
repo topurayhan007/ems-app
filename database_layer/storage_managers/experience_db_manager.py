@@ -115,16 +115,6 @@ class ExperienceDBManager(IRepository):
             db_connection.close()
             return None
         
-    # Some helper methods
-    def experience_object_to_tuple(self, experience: Experience):
-        return (
-            experience._employee_id,
-            experience._company_name,
-            experience._position,
-            experience._joining_date,
-            experience._ending_date,
-            experience._location
-        )
     
     def db_data_to_experience_list(self, data) -> list[Experience]:
         experiences: list[Experience] = []

@@ -16,7 +16,7 @@ class EmployeeDBManager(IEmployeeRepository):
         query = (
             "INSERT INTO employees "
             "(name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, salary, nationality, joining_date, present_address, permanent_address) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         )
         employee_data = self.employee_mapper._to_tuple(employee)
 
@@ -191,29 +191,7 @@ class EmployeeDBManager(IEmployeeRepository):
             db_connection.close()
             return None
 
-    # Some helper methods
-    def employee_object_to_tuple(self, employee: Employee):
-        return (
-            employee._name,
-            employee._date_of_birth,
-            employee._nid,
-            employee._email,
-            employee._phone_no,
-            employee._gender,
-            employee._father_name,
-            employee._mother_name,
-            employee._marital_status,
-            employee._role,
-            employee._dept,
-            employee._designation,
-            employee._salary,
-            employee._nationality,
-            employee._joining_date,
-            employee._present_address,
-            employee._permanent_address
-        )
 
-    
     def db_data_to_employee_list(self, data) -> list[Employee]:
         employees: list[Employee] = []
         for row in data:

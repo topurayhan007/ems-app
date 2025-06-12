@@ -117,18 +117,6 @@ class EducationDBManager(IRepository):
             db_connection.close()
             return None
 
-    # Some helper methods
-    def degree_object_to_tuple(self, degree: EducationalDegree):
-        return (
-            degree._employee_id,
-            degree._degree_name,
-            degree._institute_name,
-            degree._major,
-            degree._location,
-            degree._gpa,
-            degree._gpa_scale,
-            degree._year_of_passing
-        )
     
     def db_data_to_degree_list(self, data) -> list[EducationalDegree]:
         degrees: list[EducationalDegree] = []
