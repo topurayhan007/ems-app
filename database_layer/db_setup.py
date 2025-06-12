@@ -23,6 +23,7 @@ class DatabaseManager(IDatabaseManager):
                 "  `role` enum('Employee', 'Manager', 'Admin') NOT NULL,"
                 "  `dept` varchar(100) NOT NULL,"
                 "  `designation` varchar(100) NOT NULL,"
+                "  `salary` int NOT NULL,"
                 "  `nationality` varchar(100) NOT NULL,"
                 "  `joining_date` date NOT NULL,"
                 "  `present_address` varchar(255) NOT NULL,"

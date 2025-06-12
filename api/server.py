@@ -38,6 +38,11 @@ def run(server_class, handler_class, port):
 
 if __name__ == "__main__":
     db_manager = DatabaseManager(config)
+    try:
+        db_manager.initialize_database()
+    except Exception as e:
+        print(f"Database initialization failed: {e}")
+        exit(1)
 
     # Mappers
     employee_mapper = EmployeeMapper()
