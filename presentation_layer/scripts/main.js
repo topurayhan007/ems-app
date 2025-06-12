@@ -91,40 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     (emp) => emp._employee_id === parseInt(employeeId)
                 );
 
-                document.getElementById("edit_name").value =
-                    selectedEmployee?._name;
-                document.getElementById("edit_date_of_birth").value =
-                    convertDateToYearMonthDay(selectedEmployee._date_of_birth);
-                document.getElementById("edit_nid").value =
-                    selectedEmployee?._nid;
-                document.getElementById("edit_gender").value =
-                    selectedEmployee?._gender;
-                document.getElementById("edit_marital_status").value =
-                    selectedEmployee?._marital_status;
-                document.getElementById("edit_nationality").value =
-                    selectedEmployee?._nationality;
-                document.getElementById("edit_email").value =
-                    selectedEmployee?._email;
-                document.getElementById("edit_phone_no").value =
-                    selectedEmployee?._phone_no;
-                document.getElementById("edit_present_address").value =
-                    selectedEmployee?._present_address;
-                document.getElementById("edit_permanent_address").value =
-                    selectedEmployee?._permanent_address;
-                document.getElementById("edit_father_name").value =
-                    selectedEmployee?._father_name;
-                document.getElementById("edit_mother_name").value =
-                    selectedEmployee?._mother_name;
-                document.getElementById("edit_joining_date").value =
-                    convertDateToYearMonthDay(selectedEmployee?._joining_date);
-                document.getElementById("edit_dept").value =
-                    selectedEmployee?._dept;
-                document.getElementById("edit_designation").value =
-                    selectedEmployee?._designation;
-                document.getElementById("edit_role").value =
-                    selectedEmployee?._role;
-                document.getElementById("edit_salary").value =
-                    selectedEmployee?._salary;
+                setValuesToEmployeeEditFormFields(selectedEmployee);
 
                 // Fetch degrees data
                 const degrees_data = await fetchDegrees(
@@ -132,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
                 const degrees = degrees_data.degrees;
 
-                const fieldset = document.getElementById(
+                const fields_parent = document.getElementById(
                     "edit_education_fields"
                 );
                 const fields_wrapper = document.getElementById(
@@ -154,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (degrees.length > 0) {
                     fields_wrapper.innerHTML = "";
-                    fieldset.classList.remove("d-none");
+                    fields_parent.classList.remove("d-none");
 
                     degrees.forEach((degree, index) => {
                         fields_wrapper.appendChild(
@@ -165,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 } else {
                     fields_wrapper.innerHTML = "";
-                    fieldset.classList.remove("d-none");
+                    fields_parent.classList.remove("d-none");
                     fields_wrapper.appendChild(addButtonContainer);
                 }
 
@@ -173,6 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 document
                     .getElementById("addDegreeButton")
                     .addEventListener("click", () => {
+                        console.log("add-btn");
+
                         if (fields_wrapper.lastChild.id === "addDegreeButton") {
                             fields_wrapper.removeChild(
                                 fields_wrapper.lastChild
@@ -203,6 +172,18 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+    // Edit form submission
+    document
+        .getElementById("editEmployeeForm")
+        .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const data = getEditEmployeeFormData();
+            const employee_id =
+                document.getElementById("edit_employee_id").value;
+            console.log(data);
+        });
+
+    // Delete Employee Button
     document
         .querySelector("#employee-table tbody")
         .addEventListener("click", (e) => {
@@ -213,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     "deleteEmployeeModal"
                 );
                 const modal = bootstrap.Modal.getInstance(modalElement);
-                // Delete Employee Button
+                // Delete Employee Confirm Button
                 document
                     .getElementById("deleteEmployeeButton")
                     .addEventListener("click", async (e) => {
@@ -260,6 +241,39 @@ document.addEventListener("DOMContentLoaded", function () {
 const convertDateToYearMonthDay = (date) => {
     const [day, month, year] = date.split("-");
     return `${year}-${month}-${day}`;
+};
+
+// Function to set employee data to edit form
+const setValuesToEmployeeEditFormFields = (selectedEmployee) => {
+    document.getElementById("edit_employee_id").value =
+        selectedEmployee?._employee_id;
+    document.getElementById("edit_name").value = selectedEmployee?._name;
+    document.getElementById("edit_date_of_birth").value =
+        convertDateToYearMonthDay(selectedEmployee._date_of_birth);
+    document.getElementById("edit_nid").value = selectedEmployee?._nid;
+    document.getElementById("edit_gender").value = selectedEmployee?._gender;
+    document.getElementById("edit_marital_status").value =
+        selectedEmployee?._marital_status;
+    document.getElementById("edit_nationality").value =
+        selectedEmployee?._nationality;
+    document.getElementById("edit_email").value = selectedEmployee?._email;
+    document.getElementById("edit_phone_no").value =
+        selectedEmployee?._phone_no;
+    document.getElementById("edit_present_address").value =
+        selectedEmployee?._present_address;
+    document.getElementById("edit_permanent_address").value =
+        selectedEmployee?._permanent_address;
+    document.getElementById("edit_father_name").value =
+        selectedEmployee?._father_name;
+    document.getElementById("edit_mother_name").value =
+        selectedEmployee?._mother_name;
+    document.getElementById("edit_joining_date").value =
+        convertDateToYearMonthDay(selectedEmployee?._joining_date);
+    document.getElementById("edit_dept").value = selectedEmployee?._dept;
+    document.getElementById("edit_designation").value =
+        selectedEmployee?._designation;
+    document.getElementById("edit_role").value = selectedEmployee?._role;
+    document.getElementById("edit_salary").value = selectedEmployee?._salary;
 };
 
 // Function to create a degree form fields
@@ -328,20 +342,44 @@ const createDegreeFormFields = (degree = null, index = null) => {
                 value="${degree?._year_of_passing || ""}" required />
         </div>
         
-        ${
-            isExisting
-                ? `<input type="hidden" name="_degree_id" value="${degree._degree_id}">`
-                : `
-                <div class="col-12">
-                    <button class="btn btn-sm btn-outline-danger remove-degree-btn" id="addDegreeButton">
-                        - Remove Degree
-                    </button>
-                </div>
-                `
-        }
+       
+        <div class="col-12">
+            <button class="btn btn-sm btn-outline-danger remove-degree-btn" id="removeDegreeButton">
+                - Remove Degree
+            </button>
+        </div>        
 
         <hr class="mt-5 mb-4">
     `;
 
     return formDiv;
+};
+
+const getEditEmployeeFormData = () => {
+    const form = document.getElementById("editEmployeeForm");
+    const formData = new FormData(form);
+
+    const employeeData = {};
+    for (const [key, value] of formData.entries()) {
+        employeeData[key] = value;
+    }
+
+    const degrees = [];
+    document
+        .querySelectorAll("#edit_education_fields_container .degree-form")
+        .forEach((degreeDiv) => {
+            const degreeInputs = degreeDiv.querySelectorAll("input, select");
+            const degreeObj = {};
+            degreeInputs.forEach((input) => {
+                if (input.name) {
+                    degreeObj[input.name] = input.value;
+                }
+            });
+            degrees.push(degreeObj);
+        });
+
+    return {
+        employeeData: employeeData,
+        degrees: degrees,
+    };
 };
