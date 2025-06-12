@@ -184,15 +184,15 @@ class APIRequestHandler(BaseHTTPRequestHandler):
             # Education/Degrees API
             # http://localhost:8000/api/degrees/{id}
             elif self.path.startswith("/api/degrees/"):
-                employee_id = self.path.split("degrees/")[1]
-                result = self.education_service.delete_a_degree_of_an_employee(employee_id)
+                degree_id = self.path.split("degrees/")[1]
+                result = self.education_service.delete_a_degree_of_an_employee(degree_id)
                 self._send_response(200, "OK", {"result": result})
 
             # Experiences API
             # http://localhost:8000/api/experiences/{id}
             elif self.path.startswith("/api/experiences/"):
-                employee_id = self.path.split("experiences/")[1]
-                result = self.experience_service.delete_an_experience_of_an_employee(employee_id)
+                experience_id = self.path.split("experiences/")[1]
+                result = self.experience_service.delete_an_experience_of_an_employee(experience_id)
                 self._send_response(200, "OK", {"result": result})
 
         except Exception as e:
