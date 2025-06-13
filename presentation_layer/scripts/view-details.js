@@ -7,6 +7,7 @@ import {
     deleteDegree,
     deleteExperience,
     fetchEmployeeByID,
+    deleteEmployee,
 } from "./api-calls.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -173,6 +174,39 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log(error);
                 showToast("Something went wrong!", "bg-success");
             }
+        });
+
+    // Delete button
+    document
+        .querySelector("#delete-emp-button")
+        .addEventListener("click", (e) => {
+            const modalElement = document.getElementById("deleteEmployeeModal");
+            const modal = bootstrap.Modal.getInstance(modalElement);
+
+            // Attach only one handler
+            document.getElementById("deleteEmployeeButton").onclick = async (
+                e
+            ) => {
+                try {
+                    const result = await deleteEmployee(employeeId);
+
+                    if (result.result == 1) {
+                        modal.hide();
+                        showToast("Deleted Successfully!", "bg-success");
+                        setTimeout(() => {
+                            window.location.href = "/";
+                            // location.reload();
+                        }, 1200);
+                    } else {
+                        modal.hide();
+                        showToast("Something went wrong!", "bg-warning");
+                    }
+                } catch (error) {
+                    console.log(error);
+                    modal.hide();
+                    showToast("Something went wrong!", "bg-warning");
+                }
+            };
         });
 });
 
