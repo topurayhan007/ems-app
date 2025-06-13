@@ -516,13 +516,57 @@
                                         </div>
                                     </fieldset>
 
-                                    <div
-                                        class="d-flex justify-content-start gap-3 mt-4"
+                                    <!-- Education Information -->
+                                    <fieldset
+                                        class="mb-4 d-none"
+                                        id="add_education_fields"
                                     >
+                                        <legend class="fw-normal text-primary">
+                                            Education Information
+                                        </legend>
+                                        <div
+                                            class="row g-3"
+                                            id="add_education_fields_container"
+                                        ></div>
+                                    </fieldset>
+
+                                    <!-- Experience Information -->
+                                    <fieldset
+                                        class="mb-4 d-none"
+                                        id="add_experience_fields"
+                                    >
+                                        <legend class="fw-normal text-primary">
+                                            Experience Information
+                                        </legend>
+                                        <div
+                                            class="row g-3"
+                                            id="add_experience_fields_container"
+                                        ></div>
+                                    </fieldset>
+
+                                    <div class="modal-footer px-0">
+                                        <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            id="add_form_close_btn"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Close
+                                        </button>
                                         <button
                                             type="submit"
                                             class="btn btn-primary"
+                                            id="add-employee-submit-btn"
                                         >
+                                            <div
+                                                id="add_employee_btn_spinner"
+                                                class="spinner-border text-light d-none"
+                                                role="status"
+                                            >
+                                                <span class="visually-hidden"
+                                                    >Loading...</span
+                                                >
+                                            </div>
                                             Add Employee
                                         </button>
                                     </div>
