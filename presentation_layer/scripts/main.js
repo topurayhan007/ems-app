@@ -445,8 +445,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     "experiences",
                     JSON.stringify(experiencesData.experiences)
                 );
-
-                window.location.href = `templates/view-details.html?id=${employeeId}`;
+                window.location.href = `/`;
+                window.location.href = `presentation_layer/templates/view-details.html?id=${employeeId}`;
             }
         });
 
