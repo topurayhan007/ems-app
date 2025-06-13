@@ -87,7 +87,26 @@ document.addEventListener("DOMContentLoaded", function () {
         defaultActiveLink.click();
     }
 
-    // Employee Table Edit Button Click
+    // Search Functionality
+    document
+        .getElementById("searchEmployeeForm")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const searchInput = document.getElementById(
+                "employee_search_input"
+            );
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            try {
+                const data = await searchEmployees(query);
+                renderEmployeeTable(data.employees || []);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+    // Employee Table Edit Button Handler
     document
         .querySelector("#employee-table tbody")
         .addEventListener("click", async (e) => {
@@ -287,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-    // Delete Employee Button
+    // Employee Table Delete Button Handler
     document
         .querySelector("#employee-table tbody")
         .addEventListener("click", (e) => {
@@ -318,25 +337,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             console.log(error);
                         }
                     });
-            }
-        });
-
-    // Search
-    document
-        .getElementById("searchEmployeeForm")
-        .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const searchInput = document.getElementById(
-                "employee_search_input"
-            );
-            const query = searchInput.value.trim();
-            if (!query) return;
-
-            try {
-                const data = await searchEmployees(query);
-                renderEmployeeTable(data.employees || []);
-            } catch (error) {
-                console.error(error);
             }
         });
 });
