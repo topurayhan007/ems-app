@@ -556,24 +556,28 @@ const fillDegrees = (degrees) => {
         container.innerHTML += `
             <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 mb-3">
                 <h6 class="h6 fw-medium fs-5">
-                    <span>${degree._degree_name}</span>
+                    <span><i class="me-2" data-lucide="graduation-cap"></i>${degree._degree_name}</span>
                     in <span>${degree._major}</span>
                 </h6>
                 <p>${degree._institute_name}</p>
-                <ul class="d-flex flex-wrap gap-3">
+                <ul class="list-unstyled d-flex flex-wrap gap-3">
                     <li class="text-muted d-flex gap-2">
+                        <i data-lucide="mail"></i>
                         <p class="mb-0">Graduated <span>${degree._year_of_passing}</span></p>
                     </li>
                     <li class="text-muted d-flex gap-2">
+                        <i data-lucide="map-pin"></i>
                         <p class="mb-0"><span>${degree._location}</span></p>
                     </li>
                     <li class="text-muted d-flex gap-2">
+                        <i data-lucide="trophy"></i>
                         <p class="mb-0">GPA <span>${degree._gpa}</span> / <span>${degree._gpa_scale}</span></p>
                     </li>
                 </ul>
             </div>
         `;
     });
+    if (window.lucide) lucide.createIcons();
 };
 
 const fillExperiences = (experiences) => {
@@ -601,4 +605,5 @@ const fillExperiences = (experiences) => {
             </div>
         `;
     });
+    if (window.lucide) lucide.createIcons();
 };
