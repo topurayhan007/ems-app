@@ -9,6 +9,7 @@ import {
     addExperience,
     addDegree,
     updateEmployee,
+    addEmployee,
 } from "./api-calls.js";
 import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 
@@ -294,15 +295,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 save_button.classList.remove("disabled");
                 close_button.classList.remove("disabled");
 
-                alert("Employee Updated Successfully!");
-                location.reload();
+                showToast("Employee Updated Successfully!", "bg-success");
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
             } catch (error) {
                 spinner.classList.add("d-none");
                 save_button.classList.remove("disabled");
                 close_button.classList.remove("disabled");
 
                 console.log(error);
-                alert("Something went wrong!");
+                showToast("Something went wrong!", "bg-success");
             }
         });
 
@@ -326,15 +329,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             if (result.result == 1) {
                                 modal.hide();
+                                showToast(
+                                    "Deleted Successfully!",
+                                    "bg-success"
+                                );
                                 setTimeout(() => {
-                                    window.alert("Deleted Successfully!");
-                                    window.location.reload(true);
-                                }, 400);
+                                    location.reload();
+                                }, 1200);
                             } else {
-                                window.alert("Something went wrong!");
+                                modal.hide();
+                                showToast(
+                                    "Something went wrong!",
+                                    "bg-warning"
+                                );
                             }
                         } catch (error) {
                             console.log(error);
+                            modal.hide();
+                            showToast("Something went wrong!", "bg-warning");
                         }
                     });
             }
@@ -417,38 +429,28 @@ document.addEventListener("DOMContentLoaded", function () {
         .addEventListener("submit", async (e) => {
             e.preventDefault();
             const data = getEmployeeFormData("addEmployeeForm", "add");
-            const employee_id =
-                document.getElementById("edit_employee_id").value;
             console.log(data);
 
-            const spinner = document.getElementById("edit_confirm_btn_spinner");
+            const spinner = document.getElementById("add_employee_btn_spinner");
             spinner.classList.remove("d-none");
 
             const save_button = document.getElementById(
-                "edit-employee-submit-btn"
+                "add-employee-submit-btn"
             );
             save_button.classList.add("disabled");
 
-            const close_button = document.getElementById("edit_form_close_btn");
+            const close_button = document.getElementById("add_form_close_btn");
             close_button.classList.add("disabled");
 
             try {
-                // Update the employee data
-                await updateEmployee(employee_id, data.employee);
-
-                // Fetch existing degrees and delete one by one
-                const degrees_res = await fetchDegrees(employee_id);
-                const degrees = degrees_res.degrees;
-                for (let deg of degrees) {
-                    await deleteDegree(deg._degree_id);
-                }
-
-                // Fetch existing experiences and delete one by one
-                const exps_res = await fetchExperiences(employee_id);
-                const experiences = exps_res.experiences;
-                for (let exp of experiences) {
-                    await deleteExperience(exp._experience_id);
-                }
+                // Add employee data
+                const employee = data.employee;
+                const result = await addEmployee({
+                    _employee_id: null,
+                    ...employee,
+                });
+                const employee_id = result.result;
+                console.log(12333, employee_id);
 
                 // Add new updated degrees
                 for (let deg of data.degrees) {
@@ -471,15 +473,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 save_button.classList.remove("disabled");
                 close_button.classList.remove("disabled");
 
-                alert("Employee Updated Successfully!");
-                location.reload();
+                showToast("Employee Added Successfully!", "bg-success");
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
             } catch (error) {
                 spinner.classList.add("d-none");
                 save_button.classList.remove("disabled");
                 close_button.classList.remove("disabled");
 
                 console.log(error);
-                alert("Something went wrong!");
+                showToast("Something went wrong!", "bg-warning");
             }
         });
 });
@@ -815,4 +819,15 @@ const getEmployeeFormData = (formId, typeOfOperation) => {
         degrees: degrees,
         experiences: experiences,
     };
+};
+
+// Show toast function
+const showToast = (message, colorClass = "bg-primary") => {
+    const toastElement = document.getElementById("mainToast");
+    const toastBody = document.getElementById("mainToastBody");
+    toastElement.classList.remove("bg-primary", "bg-danger", "bg-success");
+    toastElement.classList.add(colorClass);
+    toastBody.textContent = message;
+    const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+    toast.show();
 };

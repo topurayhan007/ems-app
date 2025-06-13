@@ -160,7 +160,8 @@ td:last-child {
     color: white !important;
 }
 
-#edit_confirm_btn_spinner {
+#edit_confirm_btn_spinner,
+#add_employee_btn_spinner {
     width: var(--size-md);
     height: var(--size-md);
     border-width: 2px !important;
