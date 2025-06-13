@@ -622,7 +622,11 @@ const getEditEmployeeFormData = () => {
             const degreeInputs = degreeDiv.querySelectorAll("input, select");
             const degreeObj = {};
             degreeInputs.forEach((input) => {
-                if (input.name) {
+                if (input.name === "_gpa" || input.name === "_gpa_scale") {
+                    degreeObj[input.name] = parseFloat(input.value);
+                } else if (input.name === "_year_of_passing") {
+                    degreeObj[input.name] = parseInt(input.value);
+                } else {
                     degreeObj[input.name] = input.value;
                 }
             });
