@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .getElementById("editEmployeeForm")
         .addEventListener("submit", async (e) => {
             e.preventDefault();
-            const data = getEditEmployeeFormData();
+            const data = getEmployeeFormData("editEmployeeForm", "edit");
             const employee_id =
                 document.getElementById("edit_employee_id").value;
             console.log(data);
@@ -337,6 +337,149 @@ document.addEventListener("DOMContentLoaded", function () {
                             console.log(error);
                         }
                     });
+            }
+        });
+
+    // Employee Table Add Employee Button
+    document
+        .getElementById("addEmployeeButton")
+        .addEventListener("click", () => {
+            // Add "Add Degree" button
+            const addEducationButtonContainerAdd =
+                createAddDegreeOrExperienceButton([], "degree");
+
+            // Add "Add Experience" button
+            const addExperienceButtonContainerAdd =
+                createAddDegreeOrExperienceButton([], "experience");
+
+            // Degree form wrappers
+            const education_fields_parent = document.getElementById(
+                "add_education_fields"
+            );
+            const education_fields_wrapper = document.getElementById(
+                "add_education_fields_container"
+            );
+            education_fields_wrapper.innerHTML = "";
+            education_fields_parent.classList.remove("d-none");
+            education_fields_wrapper.appendChild(
+                addEducationButtonContainerAdd
+            );
+
+            // Experience form wrappers
+            const experience_fields_parent = document.getElementById(
+                "add_experience_fields"
+            );
+            const experience_fields_wrapper = document.getElementById(
+                "add_experience_fields_container"
+            );
+            experience_fields_wrapper.innerHTML = "";
+            experience_fields_parent.classList.remove("d-none");
+            experience_fields_wrapper.appendChild(
+                addExperienceButtonContainerAdd
+            );
+
+            // Add degree button handler
+            addDegreeOrExperienceButtonHandler(
+                "addDegreeButton",
+                education_fields_wrapper,
+                "degree-form",
+                createDegreeFormFields,
+                addEducationButtonContainerAdd
+            );
+
+            // Remove button handler
+            removeFormButtonHandler(
+                "add_education_fields_container",
+                "remove-degree-btn",
+                "degree-form"
+            );
+
+            // Add experience button handler
+            addDegreeOrExperienceButtonHandler(
+                "addExperienceButton",
+                experience_fields_wrapper,
+                "experience-form",
+                createExperienceFormFields,
+                addExperienceButtonContainerAdd
+            );
+
+            // Remove button handler
+            removeFormButtonHandler(
+                "add_experience_fields_container",
+                "remove-experience-btn",
+                "experience-form"
+            );
+        });
+
+    // Add employee form submission
+    document
+        .getElementById("addEmployeeForm")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const data = getEmployeeFormData("addEmployeeForm", "add");
+            const employee_id =
+                document.getElementById("edit_employee_id").value;
+            console.log(data);
+
+            const spinner = document.getElementById("edit_confirm_btn_spinner");
+            spinner.classList.remove("d-none");
+
+            const save_button = document.getElementById(
+                "edit-employee-submit-btn"
+            );
+            save_button.classList.add("disabled");
+
+            const close_button = document.getElementById("edit_form_close_btn");
+            close_button.classList.add("disabled");
+
+            try {
+                // Update the employee data
+                await updateEmployee(employee_id, data.employee);
+
+                // Fetch existing degrees and delete one by one
+                const degrees_res = await fetchDegrees(employee_id);
+                const degrees = degrees_res.degrees;
+                for (let deg of degrees) {
+                    await deleteDegree(deg._degree_id);
+                }
+
+                // Fetch existing experiences and delete one by one
+                const exps_res = await fetchExperiences(employee_id);
+                const experiences = exps_res.experiences;
+                for (let exp of experiences) {
+                    await deleteExperience(exp._experience_id);
+                }
+
+                // Add new updated degrees
+                for (let deg of data.degrees) {
+                    await addDegree({
+                        _degree_id: null,
+                        _employee_id: employee_id,
+                        ...deg,
+                    });
+                }
+
+                // Add new updated experiences
+                for (let exp of data.experiences) {
+                    await addExperience({
+                        _experience_id: null,
+                        _employee_id: employee_id,
+                        ...exp,
+                    });
+                }
+                spinner.classList.add("d-none");
+                save_button.classList.remove("disabled");
+                close_button.classList.remove("disabled");
+
+                alert("Employee Updated Successfully!");
+                location.reload();
+            } catch (error) {
+                spinner.classList.add("d-none");
+                save_button.classList.remove("disabled");
+                close_button.classList.remove("disabled");
+
+                console.log(error);
+                alert("Something went wrong!");
             }
         });
 });
@@ -587,8 +730,8 @@ const createExperienceFormFields = (experience = null, index = null) => {
     return formDiv;
 };
 
-const getEditEmployeeFormData = () => {
-    const form = document.getElementById("editEmployeeForm");
+const getEmployeeFormData = (formId, typeOfOperation) => {
+    const form = document.getElementById(formId);
     const formData = new FormData(form);
 
     const employeeData = {};
@@ -617,7 +760,9 @@ const getEditEmployeeFormData = () => {
 
     const degrees = [];
     document
-        .querySelectorAll("#edit_education_fields_container .degree-form")
+        .querySelectorAll(
+            `#${typeOfOperation}_education_fields_container .degree-form`
+        )
         .forEach((degreeDiv) => {
             const degreeInputs = degreeDiv.querySelectorAll("input, select");
             const degreeObj = {};
@@ -650,7 +795,9 @@ const getEditEmployeeFormData = () => {
 
     const experiences = [];
     document
-        .querySelectorAll("#edit_experience_fields_container .experience-form")
+        .querySelectorAll(
+            `#${typeOfOperation}_experience_fields_container .experience-form`
+        )
         .forEach((experienceDiv) => {
             const experienceInputs =
                 experienceDiv.querySelectorAll("input, select");
