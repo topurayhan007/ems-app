@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
         defaultActiveLink.click();
     }
 
+    // Employee Table Edit Button Click
     document
         .querySelector("#employee-table tbody")
         .addEventListener("click", async (e) => {
@@ -127,31 +128,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Add "Add Degree" button
                 const addEducationButtonContainer =
-                    document.createElement("div");
-                addEducationButtonContainer.className = "col-12 mt-3";
-                addEducationButtonContainer.innerHTML = `
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addDegreeButton">
-                        ${
-                            degrees.length > 0
-                                ? "+ Add Another Degree"
-                                : "+ Add a Degree"
-                        }
-                    </button>
-                `;
+                    createAddDegreeOrExperienceButton(degrees, "degree");
 
                 // Add "Add Experience" button
                 const addExperienceButtonContainer =
-                    document.createElement("div");
-                addExperienceButtonContainer.className = "col-12 mt-3";
-                addExperienceButtonContainer.innerHTML = `
-                    <button type="button" class="btn btn-sm btn-outline-primary" id="addExperienceButton">
-                        ${
-                            experiences.length > 0
-                                ? "+ Add Another Experience"
-                                : "+ Add a Experience"
-                        }
-                    </button>
-                `;
+                    createAddDegreeOrExperienceButton(
+                        experiences,
+                        "experience"
+                    );
 
                 if (degrees.length > 0) {
                     education_fields_wrapper.innerHTML = "";
@@ -429,6 +413,27 @@ const setValuesToEmployeeEditFormFields = (selectedEmployee) => {
         selectedEmployee?._designation;
     document.getElementById("edit_role").value = selectedEmployee?._role;
     document.getElementById("edit_salary").value = selectedEmployee?._salary;
+};
+
+// Add new exp/deg form button
+const createAddDegreeOrExperienceButton = (data, type) => {
+    const addButtonContainer = document.createElement("div");
+    addButtonContainer.className = "col-12 mt-3";
+    const buttonID =
+        type === "experience" ? "addExperienceButton" : "addDegreeButton";
+    const anotherButtonText =
+        type === "experience"
+            ? "+ Add Another Experience"
+            : "+ Add Another Degree";
+    const newButtonText =
+        type === "experience" ? "+ Add a Experience" : "+ Add a Degree";
+
+    addButtonContainer.innerHTML = `
+        <button type="button" class="btn btn-sm btn-outline-primary" id="${buttonID}">
+            ${data.length > 0 ? anotherButtonText : newButtonText}
+        </button>
+    `;
+    return addButtonContainer;
 };
 
 // Remove exp/deg button
