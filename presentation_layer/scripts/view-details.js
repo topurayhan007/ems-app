@@ -586,8 +586,9 @@ const fillEmployeeDetails = (employee) => {
 const fillDegrees = (degrees) => {
     const container = document.getElementById("education-list");
     container.innerHTML = "";
-    degrees.forEach((degree) => {
-        container.innerHTML += `
+    if (degrees.length > 0) {
+        degrees.forEach((degree) => {
+            container.innerHTML += `
             <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 mb-3">
                 <h6 class="h6 fw-medium fs-5">
                     <span><i class="me-2" data-lucide="graduation-cap"></i>${degree._degree_name}</span>
@@ -610,15 +611,19 @@ const fillDegrees = (degrees) => {
                 </ul>
             </div>
         `;
-    });
+        });
+    } else {
+        container.innerHTML = `No Data found`;
+    }
     if (window.lucide) lucide.createIcons();
 };
 
 const fillExperiences = (experiences) => {
     const container = document.getElementById("experience-list");
     container.innerHTML = "";
-    experiences.forEach((exp) => {
-        container.innerHTML += `
+    if (experiences.length > 0) {
+        experiences.forEach((exp) => {
+            container.innerHTML += `
             <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 mb-3">
                 <h6 class="h6 fw-medium fs-5">
                     <span class="d-flex align-items-center">
@@ -638,6 +643,9 @@ const fillExperiences = (experiences) => {
                 </ul>
             </div>
         `;
-    });
+        });
+    } else {
+        container.innerHTML = `No Data found`;
+    }
     if (window.lucide) lucide.createIcons();
 };
