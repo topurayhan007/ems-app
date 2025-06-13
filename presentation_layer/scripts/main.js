@@ -15,19 +15,6 @@ import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 document.addEventListener("DOMContentLoaded", function () {
     const sidebarLinks = document.querySelectorAll("#sidebarMenu .nav-link");
     let employee_data = [];
-    const education_fields_parent = document.getElementById(
-        "edit_education_fields"
-    );
-    const education_fields_wrapper = document.getElementById(
-        "edit_education_fields_container"
-    );
-
-    const experience_fields_parent = document.getElementById(
-        "edit_experience_fields"
-    );
-    const experience_fields_wrapper = document.getElementById(
-        "edit_experience_fields_container"
-    );
 
     const setActiveLink = (clickedLink) => {
         sidebarLinks.forEach((link) => link.classList.remove("active"));
@@ -111,7 +98,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     (emp) => emp._employee_id === parseInt(employeeId)
                 );
 
+                // Set all the values to employee edit form
                 setValuesToEmployeeEditFormFields(selectedEmployee);
+
+                const education_fields_parent = document.getElementById(
+                    "edit_education_fields"
+                );
+                const education_fields_wrapper = document.getElementById(
+                    "edit_education_fields_container"
+                );
+
+                const experience_fields_parent = document.getElementById(
+                    "edit_experience_fields"
+                );
+                const experience_fields_wrapper = document.getElementById(
+                    "edit_experience_fields_container"
+                );
 
                 // Fetch degrees data
                 const degrees_data = await fetchDegrees(
