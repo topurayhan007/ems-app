@@ -180,66 +180,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Add degree button function
-                document
-                    .getElementById("addDegreeButton")
-                    .addEventListener("click", () => {
-                        if (
-                            education_fields_wrapper.lastChild.id ===
-                            "addDegreeButton"
-                        ) {
-                            education_fields_wrapper.removeChild(
-                                education_fields_wrapper.lastChild
-                            );
-                        }
-                        const currentCount =
-                            education_fields_wrapper.querySelectorAll(
-                                ".degree-form"
-                            ).length;
-
-                        education_fields_wrapper.appendChild(
-                            createDegreeFormFields(null, currentCount)
-                        );
-                        education_fields_wrapper.appendChild(
-                            addEducationButtonContainer
-                        );
-                    });
+                addDegreeOrExperienceButtonHandler(
+                    "addDegreeButton",
+                    education_fields_wrapper,
+                    "degree-form",
+                    createDegreeFormFields,
+                    addEducationButtonContainer
+                );
 
                 // Remove degree button function
-                document
-                    .getElementById("edit_education_fields_container")
-                    .addEventListener("click", function (e) {
-                        if (e.target.classList.contains("remove-degree-btn")) {
-                            const degreeForm = e.target.closest(".degree-form");
-                            if (degreeForm) {
-                                degreeForm.remove();
-                            }
-                        }
-                    });
+                removeFormButtonHandler(
+                    "edit_education_fields_container",
+                    "remove-degree-btn",
+                    "degree-form"
+                );
 
                 // Add experience button function
-                document
-                    .getElementById("addExperienceButton")
-                    .addEventListener("click", () => {
-                        if (
-                            experience_fields_wrapper.lastChild.id ===
-                            "addExperienceButton"
-                        ) {
-                            experience_fields_wrapper.removeChild(
-                                experience_fields_wrapper.lastChild
-                            );
-                        }
-                        const currentCount =
-                            experience_fields_wrapper.querySelectorAll(
-                                ".experience-form"
-                            ).length;
-
-                        experience_fields_wrapper.appendChild(
-                            createExperienceFormFields(null, currentCount)
-                        );
-                        experience_fields_wrapper.appendChild(
-                            addExperienceButtonContainer
-                        );
-                    });
+                addDegreeOrExperienceButtonHandler(
+                    "addExperienceButton",
+                    experience_fields_wrapper,
+                    "experience-form",
+                    createExperienceFormFields,
+                    addExperienceButtonContainer
+                );
 
                 // Remove experience button function
                 removeFormButtonHandler(
@@ -434,6 +397,27 @@ const createAddDegreeOrExperienceButton = (data, type) => {
         </button>
     `;
     return addButtonContainer;
+};
+
+// Add deg/exp button handler
+const addDegreeOrExperienceButtonHandler = (
+    addBtnId,
+    fieldsWrapper,
+    formClass,
+    createFormFieldsFn,
+    addButtonContainer
+) => {
+    document.getElementById(addBtnId).addEventListener("click", () => {
+        if (fieldsWrapper.lastChild.id === addBtnId) {
+            fieldsWrapper.removeChild(fieldsWrapper.lastChild);
+        }
+        const currentCount = fieldsWrapper.querySelectorAll(
+            `.${formClass}`
+        ).length;
+
+        fieldsWrapper.appendChild(createFormFieldsFn(null, currentCount));
+        fieldsWrapper.appendChild(addButtonContainer);
+    });
 };
 
 // Remove exp/deg button
