@@ -423,6 +423,33 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         });
 
+    // Employee Table View Employee Button
+    document
+        .querySelector("#employee-table tbody")
+        .addEventListener("click", async (e) => {
+            if (e.target.classList.contains("btn-view")) {
+                const employeeId = e.target.getAttribute("data-id");
+
+                const employee = employee_data.find(
+                    (emp) => emp._employee_id == employeeId
+                );
+                const degreesData = await fetchDegrees(employeeId);
+                const experiencesData = await fetchExperiences(employeeId);
+
+                localStorage.setItem("employee", JSON.stringify(employee));
+                localStorage.setItem(
+                    "degrees",
+                    JSON.stringify(degreesData.degrees)
+                );
+                localStorage.setItem(
+                    "experiences",
+                    JSON.stringify(experiencesData.experiences)
+                );
+
+                window.location.href = `templates/view-details.html?id=${employeeId}`;
+            }
+        });
+
     // Add employee form submission
     document
         .getElementById("addEmployeeForm")

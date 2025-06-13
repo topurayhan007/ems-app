@@ -10,7 +10,7 @@ export const fetchEmployees = async () => {
     return data;
 };
 
-export const fetchEmployeeByID = async () => {
+export const fetchEmployeeByID = async (employeeId) => {
     const response = await fetch(`${baseURL}/api/employees/${employeeId}`);
     if (!response.ok) {
         throw new Error("Something went wrong!");
