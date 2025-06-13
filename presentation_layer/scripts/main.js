@@ -188,13 +188,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     addEducationButtonContainer
                 );
 
-                // Remove degree button function
-                removeFormButtonHandler(
-                    "edit_education_fields_container",
-                    "remove-degree-btn",
-                    "degree-form"
-                );
-
                 // Add experience button function
                 addDegreeOrExperienceButtonHandler(
                     "addExperienceButton",
@@ -202,6 +195,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     "experience-form",
                     createExperienceFormFields,
                     addExperienceButtonContainer
+                );
+
+                // Remove degree button function
+                removeFormButtonHandler(
+                    "edit_education_fields_container",
+                    "remove-degree-btn",
+                    "degree-form"
                 );
 
                 // Remove experience button function
