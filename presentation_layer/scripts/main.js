@@ -15,6 +15,19 @@ import { renderEmployeeCount, renderEmployeeTable } from "./renderer.js";
 document.addEventListener("DOMContentLoaded", function () {
     const sidebarLinks = document.querySelectorAll("#sidebarMenu .nav-link");
     let employee_data = [];
+    const education_fields_parent = document.getElementById(
+        "edit_education_fields"
+    );
+    const education_fields_wrapper = document.getElementById(
+        "edit_education_fields_container"
+    );
+
+    const experience_fields_parent = document.getElementById(
+        "edit_experience_fields"
+    );
+    const experience_fields_wrapper = document.getElementById(
+        "edit_experience_fields_container"
+    );
 
     const setActiveLink = (clickedLink) => {
         sidebarLinks.forEach((link) => link.classList.remove("active"));
@@ -112,20 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const experiences = experience_data.experiences;
                 console.log(experiences);
 
-                const education_fields_parent = document.getElementById(
-                    "edit_education_fields"
-                );
-                const education_fields_wrapper = document.getElementById(
-                    "edit_education_fields_container"
-                );
-
-                const experience_fields_parent = document.getElementById(
-                    "edit_experience_fields"
-                );
-                const experience_fields_wrapper = document.getElementById(
-                    "edit_experience_fields_container"
-                );
-
                 // Add "Add Degree" button
                 const addEducationButtonContainer =
                     document.createElement("div");
@@ -147,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 addExperienceButtonContainer.innerHTML = `
                     <button type="button" class="btn btn-sm btn-outline-primary" id="addExperienceButton">
                         ${
-                            degrees.length > 0
+                            experiences.length > 0
                                 ? "+ Add Another Experience"
                                 : "+ Add a Experience"
                         }
@@ -259,19 +258,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
 
                 // Remove experience button function
-                document
-                    .getElementById("edit_experience_fields_container")
-                    .addEventListener("click", function (e) {
-                        if (
-                            e.target.classList.contains("remove-experience-btn")
-                        ) {
-                            const experienceForm =
-                                e.target.closest(".experience-form");
-                            if (experienceForm) {
-                                experienceForm.remove();
-                            }
-                        }
-                    });
+                removeFormButtonHandler(
+                    "edit_experience_fields_container",
+                    "remove-experience-btn",
+                    "experience-form"
+                );
             }
         });
 
@@ -438,6 +429,24 @@ const setValuesToEmployeeEditFormFields = (selectedEmployee) => {
         selectedEmployee?._designation;
     document.getElementById("edit_role").value = selectedEmployee?._role;
     document.getElementById("edit_salary").value = selectedEmployee?._salary;
+};
+
+// Remove exp/deg button
+const removeFormButtonHandler = (
+    container_id,
+    remove_btn_classname,
+    form_classname
+) => {
+    document
+        .getElementById(container_id)
+        .addEventListener("click", function (e) {
+            if (e.target.classList.contains(remove_btn_classname)) {
+                const form = e.target.closest(`.${form_classname}`);
+                if (form) {
+                    form.remove();
+                }
+            }
+        });
 };
 
 // Function to create a degree form fields
