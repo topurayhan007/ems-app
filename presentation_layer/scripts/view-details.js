@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const employeeId = params.get("id");
 
+    const sidebarLinks = document.querySelectorAll("#sidebarMenu .nav-link");
+
     const employeeData = await fetchEmployeeByID(employeeId);
     const employee = employeeData.employee[0];
     const degreeData = await fetchDegrees(employeeId);
@@ -21,6 +23,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const experienceData = await fetchExperiences(employeeId);
     const experiences = experienceData.experiences;
     // console.log(employee, degrees, experiences);
+
+    sidebarLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = link.getAttribute("data-target");
+
+            if (targetId === "view-emp-section") {
+                window.location.href = "../templates/employees.html";
+            }
+        });
+    });
 
     // fill employee data
     fillEmployeeDetails(employee);
@@ -194,7 +208,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         modal.hide();
                         showToast("Deleted Successfully!", "bg-success");
                         setTimeout(() => {
-                            window.location.href = "/";
+                            window.location.href =
+                                "../templates/employees.html";
                             // location.reload();
                         }, 1200);
                     } else {
@@ -596,6 +611,11 @@ const showToast = (message, colorClass = "bg-primary") => {
 
 const fillEmployeeDetails = (employee) => {
     if (!employee) return;
+    const names = document.querySelectorAll("#name");
+    names.forEach((name) => {
+        name.textContent = employee._name || "";
+    });
+
     document.getElementById("name").textContent = employee._name || "";
     document.getElementById("designation").textContent =
         employee._designation || "";
