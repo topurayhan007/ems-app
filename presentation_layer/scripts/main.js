@@ -515,6 +515,29 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 });
 
+// Toggle sidebar
+const sidebar = document.getElementById("sidebar");
+const toggleBtn = document.getElementById("sidebarToggle");
+const backdrop = document.getElementById("sidebarBackdrop");
+
+toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+
+    const mobile = window.innerWidth < 768;
+    const sidebarOpen = !sidebar.classList.contains("collapsed");
+
+    if (mobile && sidebarOpen) {
+        backdrop.classList.remove("d-none");
+    } else {
+        backdrop.classList.add("d-none");
+    }
+});
+
+backdrop.addEventListener("click", () => {
+    sidebar.classList.add("collapsed");
+    backdrop.classList.add("d-none");
+});
+
 // Change date format
 const convertDateToYearMonthDay = (date) => {
     const [day, month, year] = date.split("-");
