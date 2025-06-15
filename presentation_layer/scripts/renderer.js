@@ -8,18 +8,22 @@ export const renderEmployeeTable = (employees) => {
             tr.innerHTML = `
                 <td>${emp._employee_id || "-"}</td>
                 <td>${emp._name || "-"}</td>
-                <td>${emp._date_of_birth || "-"}</td>
-                <td>${emp._email || "-"}</td>
+                <td>
+                    <div class="d-flex flex-column">
+                        <a class="text-decoration-none m-0" href="mailto:${
+                            emp._email
+                        }">${emp._email || "-"}</a>
+                        <a class="text-decoration-none m-0" href="tel:${
+                            emp._phone_no
+                        }">${emp._phone_no || "-"}</a>
+                    </div>
+                </td>
                 <td>${emp._dept || "-"}</td>
                 <td>${emp._designation || "-"}</td>
                 <td>${emp._role || "-"}</td>
-                <td>${emp._nid || "-"}</td>
-                <td>${emp._phone_no || "-"}</td>
-                <td>${emp._joining_date || "-"}</td>
-                
                 
                 <td>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex flex-wrap gap-2">
                     <button class="btn btn-action btn-view" data-id="${
                         emp._employee_id
                     }">View</button>

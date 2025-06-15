@@ -87,6 +87,9 @@ main {
 #employee_search_input {
     border-radius: 10px;
 }
+#employee-table tbody {
+    font-size: var(--size-sm);
+}
 .table-wrapper {
     border-radius: 10px;
 }
@@ -121,7 +124,7 @@ td:last-child {
 .btn-action {
     padding: 2px 15px !important;
     border-radius: 8px;
-    font-size: var(--size-md);
+    font-size: var(--size-sm);
     color: white;
 }
 .btn-action:hover {
