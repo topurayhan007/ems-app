@@ -560,8 +560,14 @@ const fillEmployeeDetails = (employee) => {
     document.getElementById("designation").textContent =
         employee._designation || "";
     document.getElementById("dept").textContent = employee._dept || "";
-    document.getElementById("email").textContent = employee._email || "";
-    document.getElementById("phone_no").textContent = employee._phone_no || "";
+    const emails = document.querySelectorAll("#email");
+    emails.forEach((email) => {
+        email.textContent = employee._email || "";
+    });
+    const phone_nos = document.querySelectorAll("#phone_no");
+    phone_nos.forEach((phone_no) => {
+        phone_no.textContent = employee._phone_no || "";
+    });
     document.getElementById("joining_date").textContent =
         employee._joining_date || "";
     document.getElementById("role").textContent = employee._role || "";
