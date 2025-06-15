@@ -7,7 +7,11 @@ export const renderEmployeeTable = (employees) => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${emp._employee_id || "-"}</td>
-                <td>${emp._name || "-"}</td>
+                <td>
+                    <a class="text-decoration-none m-0 fw-semibold btn-view" href="#" data-id="${
+                        emp._employee_id
+                    }" style="font-weight: 500;">${emp._name || "-"} </a>
+                </td>
                 <td>
                     <div class="d-flex flex-column">
                         <a class="text-decoration-none m-0" href="mailto:${
@@ -24,21 +28,29 @@ export const renderEmployeeTable = (employees) => {
                 
 
                 <td class="action">
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                Menu
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
+                    <div class="dropdown">
+                        <p class="dropdown-toggle text-center text-primary" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i data-lucide="ellipsis-vertical"></i>
+                        </p>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item btn-view" href="#" data-id="${
+                                emp._employee_id
+                            }">View</a>
+                            <a class="dropdown-item btn-edit" href="#" data-id="${
+                                emp._employee_id
+                            }" data-bs-toggle="modal" data-bs-target="#editEmployeeFormModal">Edit</a>
+                            <a class="dropdown-item btn-delete" href="#" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-id="${
+                                emp._employee_id
+                            }">Delete</a>
+                        </div>
+                    </div>
+                </td>
 
-            <button class="d-none"> CLick me </button>
-          </td>
+                
             `;
             tbody.appendChild(tr);
+
+            if (window.lucide) lucide.createIcons();
 
             // This is to fix the stacking of the dropdown menu
             const dropdowns = document.querySelectorAll(".dropdown");

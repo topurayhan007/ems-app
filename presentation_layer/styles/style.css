@@ -88,7 +88,7 @@ main {
     border-radius: 10px;
 }
 .view-emp .table-responsive {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 250px);
     border: 1px solid #ced4da;
     border-radius: 10px;
     overflow-y: scroll;
@@ -126,6 +126,9 @@ td:first-child {
     left: -1px;
     background-color: rgb(241, 241, 241) !important;
 }
+.dropdown-toggle::after {
+    display: none;
+}
 .action {
     position: sticky;
     right: 0;
@@ -149,7 +152,7 @@ td:last-child {
     font-size: var(--size-sm);
     color: white;
 }
-.btn-action:hover {
+/* .btn-action:hover {
     color: white;
 }
 .btn-view {
@@ -169,7 +172,7 @@ td:last-child {
 }
 .btn-delete:hover {
     background-color: rgb(243, 50, 89) !important;
-}
+} */
 #addEmployeeFormModal .modal-content,
 #editEmployeeFormModal .modal-content {
     border-radius: 10px !important;
