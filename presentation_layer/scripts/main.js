@@ -513,12 +513,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 showToast("Something went wrong!", "bg-warning");
             }
         });
+
+    // Update the sidebar state
+    updateSidebarState();
 });
 
 // Toggle sidebar
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("sidebarToggle");
 const backdrop = document.getElementById("sidebarBackdrop");
+
+const updateSidebarState = () => {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+        sidebar.classList.add("collapsed");
+        backdrop.classList.add("d-none");
+    } else {
+        sidebar.classList.remove("collapsed");
+        backdrop.classList.add("d-none");
+    }
+};
+
+window.addEventListener("resize", updateSidebarState);
 
 toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
