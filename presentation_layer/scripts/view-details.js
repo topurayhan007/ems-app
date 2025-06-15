@@ -30,10 +30,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const targetId = link.getAttribute("data-target");
 
-            if (targetId === "view-emp-section") {
-                window.location.href = "/";
-            } else if (targetId === "view-emp-section") {
-                window.location.href = "../templates/employees.html";
+            switch (targetId) {
+                case "dashboard":
+                    window.location.href = "/";
+                    break;
+
+                case "view-emp-section":
+                    window.location.href = "../templates/employees.html";
+                    break;
+
+                default:
+                    console.warn("Unknown target:", targetId);
             }
         });
     });
