@@ -105,11 +105,23 @@
                     </div>
                 </div>
                 <div class="position-relative p-3 pt-4 bg-white table-wrapper">
-                    <div class="row g-3">
-                        <div class="col-md-4 py-2">
+                    <div
+                        class="row align-items-center flex-column flex-md-row g-3"
+                    >
+                        <div
+                            class="col col-md-4 py-2 d-flex flex-wrap justify-content-between align-items-center"
+                        >
                             <h4 class="h4 section-heading">Employees</h4>
+                            <button
+                                class="btn btn-primary d-block d-md-none"
+                                id="addEmployeeButton"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addEmployeeFormModal"
+                            >
+                                Add Employee
+                            </button>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col col-md-4">
                             <form class="d-flex" id="searchEmployeeForm">
                                 <input
                                     id="employee_search_input"
@@ -120,10 +132,10 @@
                                 />
                             </form>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col col-md-4">
                             <div class="d-flex justify-content-end">
                                 <button
-                                    class="btn btn-primary"
+                                    class="btn btn-primary d-none d-md-block"
                                     id="addEmployeeButton"
                                     data-bs-toggle="modal"
                                     data-bs-target="#addEmployeeFormModal"
@@ -133,7 +145,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive mt-2">
                         <table id="employee-table" class="table table-striped">
                             <thead>
                                 <tr>
