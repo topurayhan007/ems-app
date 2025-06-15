@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const targetId = link.getAttribute("data-target");
 
             if (targetId === "view-emp-section") {
+                window.location.href = "/";
+            } else if (targetId === "view-emp-section") {
                 window.location.href = "../templates/employees.html";
             }
         });
