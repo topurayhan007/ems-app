@@ -22,21 +22,35 @@ export const renderEmployeeTable = (employees) => {
                 <td>${emp._designation || "-"}</td>
                 <td>${emp._role || "-"}</td>
                 
-                <td>
-                    <div class="d-flex flex-wrap gap-2">
-                    <button class="btn btn-action btn-view" data-id="${
-                        emp._employee_id
-                    }">View</button>
-                        <button class="btn btn-action btn-edit" data-id="${
-                            emp._employee_id
-                        }" data-bs-toggle="modal" data-bs-target="#editEmployeeFormModal">Edit</button>
-                        <button class="btn btn-action btn-delete" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-id="${
-                            emp._employee_id
-                        }">Delete</button>
-                    </div>
-                </td>
+
+                <td class="action">
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </div>
+
+            <button class="d-none"> CLick me </button>
+          </td>
             `;
             tbody.appendChild(tr);
+
+            // This is to fix the stacking of the dropdown menu
+            const dropdowns = document.querySelectorAll(".dropdown");
+
+            dropdowns.forEach((dropdown) => {
+                dropdown.addEventListener("click", function () {
+                    document.querySelectorAll("td.action").forEach((td) => {
+                        td.style.zIndex = "0";
+                    });
+                    this.parentElement.style.zIndex = "1";
+                });
+            });
         });
     } else {
         const tr = document.createElement("tr");
