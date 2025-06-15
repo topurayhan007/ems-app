@@ -167,3 +167,15 @@ td:last-child {
     border-width: 2px !important;
     margin-right: 5px;
 }
+
+.view-emp-details-section .lucide {
+    width: 10px;
+    height: 10px;
+}
+.view-details-card {
+    border-radius: 10px !important;
+}
+
+.list-group-item p {
+    margin: 0;
+}

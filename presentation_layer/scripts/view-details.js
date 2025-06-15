@@ -589,16 +589,22 @@ const fillDegrees = (degrees) => {
     if (degrees.length > 0) {
         degrees.forEach((degree) => {
             container.innerHTML += `
-            <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 mb-3">
-                <h6 class="h6 fw-medium fs-5">
-                    <span><i class="me-2" data-lucide="graduation-cap"></i>${degree._degree_name}</span>
+            <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 ${
+                degrees.length > 1 ? "mt-3" : ""
+            }">
+                <h6 class="fs-5 fw-medium">
+                    <span><i class="me-2" data-lucide="graduation-cap"></i>${
+                        degree._degree_name
+                    }</span>
                     in <span>${degree._major}</span>
                 </h6>
                 <p>${degree._institute_name}</p>
-                <ul class="list-unstyled d-flex flex-wrap gap-3">
+                <ul class="list-unstyled d-flex flex-wrap gap-2 gap-md-3 mb-0">
                     <li class="text-muted d-flex gap-2">
                         <i data-lucide="mail"></i>
-                        <p class="mb-0">Graduated <span>${degree._year_of_passing}</span></p>
+                        <p class="mb-0">Graduated <span>${
+                            degree._year_of_passing
+                        }</span></p>
                     </li>
                     <li class="text-muted d-flex gap-2">
                         <i data-lucide="map-pin"></i>
@@ -606,7 +612,9 @@ const fillDegrees = (degrees) => {
                     </li>
                     <li class="text-muted d-flex gap-2">
                         <i data-lucide="trophy"></i>
-                        <p class="mb-0">GPA <span>${degree._gpa}</span> / <span>${degree._gpa_scale}</span></p>
+                        <p class="mb-0">GPA <span>${
+                            degree._gpa
+                        }</span> / <span>${degree._gpa_scale}</span></p>
                     </li>
                 </ul>
             </div>
@@ -624,17 +632,23 @@ const fillExperiences = (experiences) => {
     if (experiences.length > 0) {
         experiences.forEach((exp) => {
             container.innerHTML += `
-            <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 mb-3">
-                <h6 class="h6 fw-medium fs-5">
+            <div class="border border-1 border-dark-subtle p-3 pt-4 rounded-3 ${
+                experiences.length > 1 ? "mt-3" : ""
+            }">
+                <h6 class="fs-5 fw-medium">
                     <span class="d-flex align-items-center">
-                        <i class="me-2" data-lucide="briefcase"></i>${exp._position}
+                        <i class="me-2" data-lucide="briefcase"></i>${
+                            exp._position
+                        }
                     </span>
                 </h6>
                 <p>${exp._company_name}</p>
-                <ul class="list-unstyled d-flex flex-wrap gap-3">
+                <ul class="list-unstyled d-flex flex-wrap gap-2 gap-md-3 mb-0">
                     <li class="text-muted d-flex gap-2">
                         <i data-lucide="calendar"></i>
-                        <p class="mb-0"><span>${exp._joining_date}</span> to <span>${exp._ending_date}</span></p>
+                        <p class="mb-0"><span>${
+                            exp._joining_date
+                        }</span> to <span>${exp._ending_date}</span></p>
                     </li>
                     <li class="text-muted d-flex gap-2">
                         <i data-lucide="map-pin"></i>

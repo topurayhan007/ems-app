@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="../styles/style.css" />
     </head>
     <body class="d-flex">
-        <aside
+        <!-- <aside
             class="d-flex flex-column flex-shrink-0 p-3 bg-white overflow-y-auto sidebar"
             style="width: 280px"
         >
@@ -51,324 +51,205 @@
                     </a>
                 </li>
             </ul>
-        </aside>
+        </aside> -->
 
-        <main class="overflow-y-auto container-fluid p-2 p-md-5">
-
+        <main class="overflow-y-auto container-fluid p-3 p-md-4 p-lg-5">
             <section class="content-section" id="home1">
                 <h3>Welcome,</h3>
-            </section>
-
-            <section
-                class="home container-fluid content-section"
-                id="dashboard"
-            >
-                <h4 class="h4 section-heading pb-md-3">Dashboard</h4>
-                <div class="d-flex justify-content-center py-2">
-                    <div
-                        id="spinner"
-                        style="display: none"
-                        class="spinner-border text-primary"
-                        role="status"
-                    >
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-
-                <div class="stats-wrapper row mx-0 gap-2 gap-md-3">
-                    <div class="stat-card bg-white col-md p-md-4">
-                        <h3 class="h3" id="employeeCount"></h3>
-                        <p class="text-muted mb-0">Employees</p>
-                    </div>
-                    <div class="stat-card bg-white col-md p-md-4">
-                        <h3 class="h3" id="employeeCount"></h3>
-                        <p class="text-muted mb-0"></p>
-                    </div>
-                    <div class="stat-card bg-white col-md p-md-4">
-                        <h3 class="h3" id="employeeCount"></h3>
-                        <p class="text-muted mb-0"></p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="view-emp content-section" id="view-emp-section">
-                <div class="d-flex justify-content-center py-2">
-                    <div
-                        id="spinner"
-                        style="display: none"
-                        class="spinner-border text-primary"
-                        role="status"
-                    >
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-                <div class="position-relative p-3 pt-4 bg-white table-wrapper">
-                    <div class="row g-3">
-                        <div class="col-md-4 py-2">
-                            <h4 class="h4 section-heading">Employees</h4>
-                        </div>
-                        <div class="col-md-4">
-                            <form class="d-flex" id="searchEmployeeForm">
-                                <input
-                                    id="employee_search_input"
-                                    class="form-control me-2"
-                                    type="search"
-                                    placeholder="Search..."
-                                    aria-label="Search"
-                                />
-                            </form>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="d-flex justify-content-end">
-                                <button
-                                    class="btn btn-primary"
-                                    id="addEmployeeButton"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#addEmployeeFormModal"
-                                >
-                                    Add Employee
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="employee-table" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Employee ID</th>
-                                    <th>Name</th>
-                                    <th>Date of Birth</th>
-                                    <th>Email</th>
-                                    <th>Department</th>
-                                    <th>Designation</th>
-                                    <th>Role</th>
-                                    <th>NID</th>
-                                    <th>Phone No</th>
-                                    <th>Joining Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
             </section>
 
             <section
                 class="content-section active"
                 id="view-emp-details-section"
             >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div
-                                class="profile-summary-section bg-white border border-1 border-dark-subtle rounded-3 p-md-4"
-                            >
-                                <div class="profile-card">
-                                    <div
-                                        class="d-flex justify-content-between pb-2"
-                                    >
-                                        <h5 class="h4 profile-name" id="name">
-                                            Will Smith
-                                        </h5>
-                                        <div class="btn-container d-flex gap-2">
-                                            <button
-                                                class="btn btn-action btn-warning"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#editEmployeeFormModal"
-                                                data-id=""
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                class="btn btn-action btn-danger"
-                                                id="delete-emp-button"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#deleteEmployeeModal"
-                                                data-id=""
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="profile-title">
-                                        <span
-                                            class="text-secondary border rounded-pill px-2"
-                                            id="designation"
-                                            >HR Manager</span
-                                        >
-                                        · <span id="dept">HR Department</span>
-                                    </div>
-                                </div>
-                                <!-- Profile Summary Section -->
+                <div class="row flex-column flex-md-row gap-4 gap-md-0">
+                    <div class="col-md-6">
+                        <div
+                            class="profile-summary-section bg-white border border-1 border-dark-subtle rounded-3 p-3 p-lg-4 shadow-sm view-details-card"
+                        >
+                            <div class="profile-card">
                                 <div
-                                    class="employee-info-list-container d-flex gap-4 flex-wrap flex-md-nowrap pt-3"
+                                    class="d-flex justify-content-between align-items-center pb-2 flex-wrap gap-2"
                                 >
-                                    <div class="">
-                                        <ul class="list-unstyled text-dark">
-                                            <li class="">
-                                                <i data-lucide="mail"></i>
-                                                <span id="email"
-                                                    >will.smith@example.com</span
-                                                >
-                                            </li>
-                                            <li class="pt-2">
-                                                <i data-lucide="phone"></i>
-                                                <span id="phone_no"
-                                                    >9876543212</span
-                                                >
-                                            </li>
-                                            <li class="pt-2">
-                                                <i data-lucide="calendar"></i>
-                                                <span
-                                                    >Joined:
-                                                    <span id="joining_date"
-                                                        >15-03-2020</span
-                                                    ></span
-                                                >
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="">
-                                        <ul class="list-unstyled">
-                                            <li class="">
-                                                <i data-lucide="briefcase"></i>
-                                                <span
-                                                    >Role:
-                                                    <span id="role"> </span
-                                                ></span>
-                                            </li>
-                                            <li class="pt-2">
-                                                <i data-lucide="id-card"></i>
-                                                <span
-                                                    >NID: <span id="nid"></span
-                                                ></span>
-                                            </li>
-                                            <li class="pt-2">
-                                                <i data-lucide="map-pin"></i>
-                                                <span>Ontario, Toronto</span>
-                                            </li>
-                                        </ul>
+                                    <h5
+                                        class="h4 m-0 profile-name"
+                                        id="name"
+                                    ></h5>
+                                    <div
+                                        class="btn-container d-flex justify-content-end gap-2"
+                                    >
+                                        <button
+                                            class="btn btn-warning btn-action"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editEmployeeFormModal"
+                                            data-id=""
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            class="btn btn-danger btn-action"
+                                            id="delete-emp-button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteEmployeeModal"
+                                            data-id=""
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                 </div>
+                                <div
+                                    class="d-inline-flex gap-1 flex-wrap profile-title"
+                                >
+                                    <span
+                                        class="text-secondary border rounded-pill px-2"
+                                        id="designation"
+                                    ></span>
+                                    • <span id="dept"></span>
+                                </div>
                             </div>
-
-                            <!-- Education Section -->
+                            <!-- Profile Summary Section -->
                             <div
-                                class="bg-white border border-1 border-dark-subtle rounded-3 p-md-4 mt-4"
+                                class="employee-info-list-container d-flex flex-wrap justify-content-between gap-2 pt-3"
                             >
-                                <h5 class="h5 mb-4">Education History</h5>
-
-                                <div id="education-list"></div>
-                            </div>
-
-                            <div
-                                class="bg-white border border-1 border-dark-subtle rounded-3 p-md-4 mt-4"
-                            >
-                                <h5 class="h5 mb-4">Work Experience</h5>
-
-                                <div id="experience-list"></div>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-flex gap-2">
+                                        <i data-lucide="mail"></i>
+                                        <span id="email"></span>
+                                    </li>
+                                    <li class="d-flex gap-2 pt-2">
+                                        <i data-lucide="briefcase"></i>
+                                        <span
+                                            >Role: <span id="role"> </span
+                                        ></span>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-flex gap-2">
+                                        <i data-lucide="phone"></i>
+                                        <span id="phone_no"></span>
+                                    </li>
+                                    <li class="d-flex gap-2 pt-2">
+                                        <i data-lucide="calendar"></i>
+                                        <span
+                                            >Joined:
+                                            <span id="joining_date"></span>
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div
-                                class="bg-white border border-1 border-dark-subtle rounded-3 p-md-4"
-                            >
-                                <h5 class="h5">Personal Details</h5>
 
-                                <div class="personal-details-container pt-4">
-                                    <ul class="list-unstyled">
-                                        <li
-                                            class="d-flex justify-content-between border-bottom"
-                                        >
-                                            <p class="">Name</p>
-                                            <p class="" id="name">Will Smith</p>
-                                        </li>
+                        <!-- Education Section -->
+                        <div
+                            class="bg-white border border-1 border-dark-subtle rounded-3 p-3 p-lg-4 mt-4 shadow-sm view-details-card"
+                        >
+                            <h5 class="h5 mb-3 mb-lg-4">Education History</h5>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Date of Birth</p>
-                                            <p class="" id="date_of_birth"></p>
-                                        </li>
+                            <div id="education-list"></div>
+                        </div>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Gender</p>
-                                            <p class="" id="gender"></p>
-                                        </li>
+                        <!-- Work Experience Section -->
+                        <div
+                            class="bg-white border border-1 border-dark-subtle rounded-3 p-3 p-lg-4 mt-4 shadow-sm view-details-card"
+                        >
+                            <h5 class="h5 mb-3 mb-lg-4">Work Experience</h5>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">NID</p>
-                                            <p class="" id="nid"></p>
-                                        </li>
+                            <div id="experience-list"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Profile Details Section -->
+                        <div
+                            class="bg-white border border-1 border-dark-subtle rounded-3 p-3 p-lg-4 shadow-sm view-details-card"
+                        >
+                            <h5 class="h5">Personal Details</h5>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Email</p>
-                                            <p class="" id="email"></p>
-                                        </li>
+                            <div class="personal-details-container pt-3 pt-lg-4">
+                                <ul class="list-group">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Name</p>
+                                        <p class="" id="name">Will Smith</p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Phone Number</p>
-                                            <p class="" id="phone_no"></p>
-                                        </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Date of Birth</p>
+                                        <p class="" id="date_of_birth"></p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Father's Name</p>
-                                            <p class="" id="father_name"></p>
-                                        </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Gender</p>
+                                        <p class="" id="gender"></p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Mother's Name</p>
-                                            <p class="" id="mother_name"></p>
-                                        </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">NID</p>
+                                        <p class="" id="nid"></p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Marital Status</p>
-                                            <p class="" id="marital_status"></p>
-                                        </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Email</p>
+                                        <p class="" id="email"></p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Nationality</p>
-                                            <p class="" id="nationality"></p>
-                                        </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Phone Number</p>
+                                        <p class="" id="phone_no"></p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2 border-bottom"
-                                        >
-                                            <p class="">Present Address</p>
-                                            <p
-                                                class=""
-                                                id="present_address"
-                                            ></p>
-                                        </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Father's Name</p>
+                                        <p class="" id="father_name"></p>
+                                    </li>
 
-                                        <li
-                                            class="d-flex justify-content-between mt-2"
-                                        >
-                                            <p class="">Permanent Address</p>
-                                            <p
-                                                class=""
-                                                id="permanent_address"
-                                            ></p>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Mother's Name</p>
+                                        <p class="" id="mother_name"></p>
+                                    </li>
+
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Marital Status</p>
+                                        <p class="" id="marital_status"></p>
+                                    </li>
+
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Nationality</p>
+                                        <p class="" id="nationality"></p>
+                                    </li>
+
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Present Address</p>
+                                        <p class="" id="present_address"></p>
+                                    </li>
+
+                                    <li
+                                        class="list-group-item d-flex justify-content-between"
+                                    >
+                                        <p class="">Permanent Address</p>
+                                        <p class="" id="permanent_address"></p>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
