@@ -135,6 +135,89 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("edit_employee_id").value;
             console.log(data);
 
+            // Date checks
+            const now = new Date();
+            // Date of birth can't be in the future
+            if (
+                data.employee._date_of_birth &&
+                new Date(data.employee._date_of_birth) > now
+            ) {
+                showToast(
+                    "Date of birth cannot be in the future.",
+                    "bg-danger"
+                );
+                return;
+            }
+            // Joining date not in the future
+            if (
+                data.employee._joining_date &&
+                new Date(data.employee._joining_date) > now
+            ) {
+                showToast("Joining date cannot be in the future.", "bg-danger");
+                return;
+            }
+
+            // Email check
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.employee._email)) {
+                showToast("Invalid email address.", "bg-danger");
+                return;
+            }
+
+            // NID check: 10 to 17 digits
+            if (
+                data.employee._nid.toString().length < 10 ||
+                data.employee._nid.toString().length > 17
+            ) {
+                showToast("NID must be 10 to 17 digits.", "bg-danger");
+                return;
+            }
+
+            // Phone number: exactly 11 digits
+            if (!data.employee._phone_no.length === 11) {
+                showToast(
+                    "Phone number must be exactly 11 digits.",
+                    "bg-danger"
+                );
+                return;
+            }
+
+            // Check GPA values for degrees
+            for (let deg of data.degrees) {
+                if (deg._gpa > deg._gpa_scale) {
+                    showToast(
+                        `GPA must be smaller than GPA scale for degree: ${deg._degree_name}`,
+                        "bg-danger"
+                    );
+                    return;
+                }
+            }
+
+            // Check experience dates
+            for (let exp of data.experiences) {
+                if (new Date(exp._joining_date) > now) {
+                    showToast(
+                        "Experience joining date cannot be in the future.",
+                        "bg-danger"
+                    );
+                    return;
+                }
+                if (new Date(exp._ending_date) > now) {
+                    showToast(
+                        "Experience ending date cannot be in the future.",
+                        "bg-danger"
+                    );
+                    return;
+                }
+                if (new Date(exp._joining_date) >= new Date(exp._ending_date)) {
+                    showToast(
+                        "There should be difference between Joining and Ending date for experiences.",
+                        "bg-danger"
+                    );
+                    return;
+                }
+            }
+
             const spinner = document.getElementById("edit_confirm_btn_spinner");
             spinner.classList.remove("d-none");
 
@@ -161,25 +244,52 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const exps_res = await fetchExperiences(employee_id);
                 const experiences = exps_res.experiences;
                 for (let exp of experiences) {
-                    await deleteExperience(exp._experience_id);
+                    try {
+                        await deleteExperience(exp._experience_id);
+                    } catch (error) {
+                        spinner.classList.add("d-none");
+                        save_button.classList.remove("disabled");
+                        close_button.classList.remove("disabled");
+
+                        console.log(error);
+                        showToast(error.message, "bg-danger");
+                    }
                 }
 
                 // Add new updated degrees
                 for (let deg of data.degrees) {
-                    await addDegree({
-                        _degree_id: null,
-                        _employee_id: employee_id,
-                        ...deg,
-                    });
+                    try {
+                        await addDegree({
+                            _degree_id: null,
+                            _employee_id: employee_id,
+                            ...deg,
+                        });
+                    } catch (error) {
+                        spinner.classList.add("d-none");
+                        save_button.classList.remove("disabled");
+                        close_button.classList.remove("disabled");
+
+                        console.log(error);
+                        showToast(error.message, "bg-danger");
+                    }
                 }
 
                 // Add new updated experiences
                 for (let exp of data.experiences) {
-                    await addExperience({
-                        _experience_id: null,
-                        _employee_id: employee_id,
-                        ...exp,
-                    });
+                    try {
+                        await addExperience({
+                            _experience_id: null,
+                            _employee_id: employee_id,
+                            ...exp,
+                        });
+                    } catch (error) {
+                        spinner.classList.add("d-none");
+                        save_button.classList.remove("disabled");
+                        close_button.classList.remove("disabled");
+
+                        console.log(error);
+                        showToast(error.message, "bg-danger");
+                    }
                 }
                 spinner.classList.add("d-none");
                 save_button.classList.remove("disabled");
@@ -195,7 +305,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 close_button.classList.remove("disabled");
 
                 console.log(error);
-                showToast("Something went wrong!", "bg-success");
+                showToast(error.message, "bg-danger");
             }
         });
 
