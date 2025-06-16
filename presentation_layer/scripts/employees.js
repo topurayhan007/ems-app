@@ -306,9 +306,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
     // Employee Table Add Employee Button
-    document
-        .getElementById("addEmployeeButton")
-        .addEventListener("click", () => {
+    const addEmployeeButtons = document.querySelectorAll("#addEmployeeButton");
+    addEmployeeButtons.forEach((addButton) => {
+        addButton.addEventListener("click", () => {
             // Add "Add Degree" button
             const addEducationButtonContainerAdd =
                 createAddDegreeOrExperienceButton([], "degree");
@@ -321,6 +321,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const education_fields_parent = document.getElementById(
                 "add_education_fields"
             );
+
             const education_fields_wrapper = document.getElementById(
                 "add_education_fields_container"
             );
@@ -375,6 +376,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "experience-form"
             );
         });
+    });
 
     // Employee Table View Employee Button
     document
