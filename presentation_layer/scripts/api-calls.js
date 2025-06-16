@@ -61,10 +61,20 @@ export const updateEmployee = async (employeeId, employeeData) => {
         },
         body: JSON.stringify(employeeData),
     });
+    const data = await response.json();
     if (!response.ok) {
-        throw new Error("Failed to update employee");
+        const duplicateError = data.error.includes("Duplicate entry");
+        if (duplicateError) {
+            const key = data.error.split("employees.")[1].slice(0, -1);
+            console.log(key);
+            const errorMsg = `'${key}' must be unique!`;
+
+            throw new Error(errorMsg || "Failed to add employee");
+        } else {
+            throw new Error(data.error || "Failed to add employee");
+        }
     }
-    return await response.json();
+    return data;
 };
 
 export const deleteEmployee = async (employeeId) => {
