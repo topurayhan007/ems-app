@@ -487,20 +487,38 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (employee_id) {
                     // Add new updated degrees
                     for (let deg of degrees) {
-                        await addDegree({
-                            _degree_id: null,
-                            _employee_id: employee_id,
-                            ...deg,
-                        });
+                        try {
+                            await addDegree({
+                                _degree_id: null,
+                                _employee_id: employee_id,
+                                ...deg,
+                            });
+                        } catch (error) {
+                            spinner.classList.add("d-none");
+                            save_button.classList.remove("disabled");
+                            close_button.classList.remove("disabled");
+
+                            console.log(error);
+                            showToast(error.message, "bg-warning");
+                        }
                     }
 
                     // Add new updated experiences
                     for (let exp of experiences) {
-                        await addExperience({
-                            _experience_id: null,
-                            _employee_id: employee_id,
-                            ...exp,
-                        });
+                        try {
+                            await addExperience({
+                                _experience_id: null,
+                                _employee_id: employee_id,
+                                ...exp,
+                            });
+                        } catch (error) {
+                            spinner.classList.add("d-none");
+                            save_button.classList.remove("disabled");
+                            close_button.classList.remove("disabled");
+
+                            console.log(error);
+                            showToast(error.message, "bg-warning");
+                        }
                     }
                     spinner.classList.add("d-none");
                     save_button.classList.remove("disabled");
@@ -510,9 +528,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     setTimeout(() => {
                         location.reload();
                     }, 1200);
-                }
-                else {
-                    
+                } else {
                 }
             } catch (error) {
                 spinner.classList.add("d-none");
@@ -520,7 +536,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 close_button.classList.remove("disabled");
 
                 console.log(error);
-                showToast("Something went wrong!", "bg-warning");
+                showToast(error.message, "bg-warning");
             }
         });
 
@@ -901,7 +917,16 @@ const getEmployeeFormData = (formId, typeOfOperation) => {
 const showToast = (message, colorClass = "bg-primary") => {
     const toastElement = document.getElementById("mainToast");
     const toastBody = document.getElementById("mainToastBody");
-    toastElement.classList.remove("bg-primary", "bg-danger", "bg-success");
+    toastElement.classList.remove(
+        "bg-primary",
+        "bg-danger",
+        "bg-success",
+        "bg-warning",
+        "bg-info",
+        "bg-secondary",
+        "bg-dark",
+        "bg-light"
+    );
     toastElement.classList.add(colorClass);
     toastBody.textContent = message;
     const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
