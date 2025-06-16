@@ -34,23 +34,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // Search Functionality
-    document
-        .getElementById("searchEmployeeForm")
-        .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const searchInput = document.getElementById(
-                "employee_search_input"
-            );
+    const searchInput = document.getElementById("employee_search_input");
+    let searchTimeout;
+    searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(async () => {
             const query = searchInput.value.trim();
-            if (!query) return;
-
-            try {
-                const data = await searchEmployees(query);
-                renderEmployeeTable(data.employees || []);
-            } catch (error) {
-                console.error(error);
+            if (!query) {
+                // Fetch all if cleared
+                try {
+                    const data = await fetchEmployees();
+                    renderEmployeeTable(data.employees || []);
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                // Live search
+                try {
+                    const data = await searchEmployees(query);
+                    renderEmployeeTable(data.employees || []);
+                } catch (error) {
+                    console.error(error);
+                }
             }
-        });
+        }, 150);
+    });
 
     // Employee Table Edit Button Handler
     document
