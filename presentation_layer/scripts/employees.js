@@ -413,6 +413,54 @@ document.addEventListener("DOMContentLoaded", async () => {
             const data = getEmployeeFormData("addEmployeeForm", "add");
             console.log(data);
 
+            const employee = data.employee;
+            const degrees = data.degrees;
+            const experiences = data.experiences;
+
+            // Date checks
+            const now = new Date();
+            // Date of birth not in the future
+            if (
+                employee._date_of_birth &&
+                new Date(employee._date_of_birth) > now
+            ) {
+                showToast(
+                    "Date of birth cannot be in the future.",
+                    "bg-danger"
+                );
+                return;
+            }
+            // Joining date not in the future
+            if (
+                employee._joining_date &&
+                new Date(employee._joining_date) > now
+            ) {
+                showToast("Joining date cannot be in the future.", "bg-danger");
+                return;
+            }
+
+            // Email check
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(employee._email)) {
+                showToast("Invalid email address.", "bg-danger");
+                return;
+            }
+
+            // NID check: 10 to 17 digits
+            if (!/^\d{10,17}$/.test(employee._nid)) {
+                showToast("NID must be 10 to 17 digits.", "bg-danger");
+                return;
+            }
+
+            // Phone number: exactly 11 digits
+            if (!/^\d{11}$/.test(employee._phone_no)) {
+                showToast(
+                    "Phone number must be exactly 11 digits.",
+                    "bg-danger"
+                );
+                return;
+            }
+
             const spinner = document.getElementById("add_employee_btn_spinner");
             spinner.classList.remove("d-none");
 
@@ -426,7 +474,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             try {
                 // Add employee data
-                const employee = data.employee;
                 const result = await addEmployee({
                     _employee_id: null,
                     ...employee,
@@ -435,7 +482,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log(12333, employee_id);
 
                 // Add new updated degrees
-                for (let deg of data.degrees) {
+                for (let deg of degrees) {
                     await addDegree({
                         _degree_id: null,
                         _employee_id: employee_id,
@@ -444,7 +491,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
                 // Add new updated experiences
-                for (let exp of data.experiences) {
+                for (let exp of experiences) {
                     await addExperience({
                         _experience_id: null,
                         _employee_id: employee_id,

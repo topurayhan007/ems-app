@@ -18,6 +18,7 @@ from database_layer.storage_managers.experience_db_manager import ExperienceDBMa
 from application_layer.mappers.employee_mapper import EmployeeMapper
 from application_layer.mappers.education_mapper import EducationMapper
 from application_layer.mappers.experience_mapper import ExperienceMapper
+from application_layer.factories.service_abstract_factory import ConcreteServiceFactory
 
 
 load_dotenv()
@@ -54,9 +55,12 @@ if __name__ == "__main__":
     education_db_manager = EducationDBManager(db_manager, education_mapper)
     experience_db_manager = ExperienceDBManager(db_manager, experience_mapper)
 
-    employee_service = EmployeeService(employee_db_manager)
-    education_service = EducationService(education_db_manager)
-    experience_service = ExperienceService(experience_db_manager)
+    # Abstract Factory
+    service_factory = ConcreteServiceFactory(employee_db_manager, education_db_manager, experience_db_manager)
+
+    employee_service = service_factory.create_employee_service()
+    education_service = service_factory.create_education_service()
+    experience_service = service_factory.create_experience_service()
 
     PORT = 8000
     server_class = HTTPServer
