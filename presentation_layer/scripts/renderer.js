@@ -29,7 +29,7 @@ export const renderEmployeeTable = (employees) => {
 
                 <td class="action">
                     <div class="dropdown">
-                        <p class="dropdown-toggle text-center text-primary" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <p class="dropdown-toggle text-center text-primary mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             <i data-lucide="ellipsis-vertical"></i>
                         </p>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
