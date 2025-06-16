@@ -611,7 +611,16 @@ const getEmployeeFormData = (formId, typeOfOperation) => {
 const showToast = (message, colorClass = "bg-primary") => {
     const toastElement = document.getElementById("mainToast");
     const toastBody = document.getElementById("mainToastBody");
-    toastElement.classList.remove("bg-primary", "bg-danger", "bg-success");
+    toastElement.classList.remove(
+        "bg-primary",
+        "bg-danger",
+        "bg-success",
+        "bg-warning",
+        "bg-info",
+        "bg-secondary",
+        "bg-dark",
+        "bg-light"
+    );
     toastElement.classList.add(colorClass);
     toastBody.textContent = message;
     const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
