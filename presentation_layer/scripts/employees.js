@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Date checks
             const now = new Date();
-            // Date of birth not in the future
+            // Date of birth can't be in the future
             if (
                 employee._date_of_birth &&
                 new Date(employee._date_of_birth) > now
@@ -447,13 +447,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             // NID check: 10 to 17 digits
-            if (!/^\d{10,17}$/.test(employee._nid)) {
+            if (
+                employee._nid.toString().length < 10 ||
+                employee._nid.toString().length > 17
+            ) {
                 showToast("NID must be 10 to 17 digits.", "bg-danger");
                 return;
             }
 
             // Phone number: exactly 11 digits
-            if (!/^\d{11}$/.test(employee._phone_no)) {
+            if (!employee._phone_no.length === 11) {
                 showToast(
                     "Phone number must be exactly 11 digits.",
                     "bg-danger"
@@ -481,31 +484,36 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const employee_id = result.result;
                 console.log(12333, employee_id);
 
-                // Add new updated degrees
-                for (let deg of degrees) {
-                    await addDegree({
-                        _degree_id: null,
-                        _employee_id: employee_id,
-                        ...deg,
-                    });
-                }
+                if (employee_id) {
+                    // Add new updated degrees
+                    for (let deg of degrees) {
+                        await addDegree({
+                            _degree_id: null,
+                            _employee_id: employee_id,
+                            ...deg,
+                        });
+                    }
 
-                // Add new updated experiences
-                for (let exp of experiences) {
-                    await addExperience({
-                        _experience_id: null,
-                        _employee_id: employee_id,
-                        ...exp,
-                    });
-                }
-                spinner.classList.add("d-none");
-                save_button.classList.remove("disabled");
-                close_button.classList.remove("disabled");
+                    // Add new updated experiences
+                    for (let exp of experiences) {
+                        await addExperience({
+                            _experience_id: null,
+                            _employee_id: employee_id,
+                            ...exp,
+                        });
+                    }
+                    spinner.classList.add("d-none");
+                    save_button.classList.remove("disabled");
+                    close_button.classList.remove("disabled");
 
-                showToast("Employee Added Successfully!", "bg-success");
-                setTimeout(() => {
-                    location.reload();
-                }, 1200);
+                    showToast("Employee Added Successfully!", "bg-success");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1200);
+                }
+                else {
+                    
+                }
             } catch (error) {
                 spinner.classList.add("d-none");
                 save_button.classList.remove("disabled");
