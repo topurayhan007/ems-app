@@ -129,7 +129,8 @@ thead {
     position: sticky;
     top: -2px;
     z-index: 10;
-    background-color: white;
+    background-color: #0d6efd;
+    color: white;
     border-bottom: 1px solid black;
 }
 
@@ -144,7 +145,7 @@ tr {
 th:first-child {
     position: sticky;
     left: 0px;
-    background-color: white;
+    background-color: #0d6efd;
     text-wrap: nowrap;
 }
 td:first-child {
@@ -162,7 +163,7 @@ td:first-child {
 th:last-child {
     position: sticky;
     right: -1px;
-    background-color: white;
+    background-color: #0d6efd;
     text-wrap: nowrap;
 }
 td:last-child {
