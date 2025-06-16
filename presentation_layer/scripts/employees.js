@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         } catch (error) {
                             console.log(error);
                             modal.hide();
-                            showToast("Something went wrong!", "bg-warning");
+                            showToast("Something went wrong!", "bg-danger");
                         }
                     });
             }
@@ -487,6 +487,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (employee_id) {
                     // Add new updated degrees
                     for (let deg of degrees) {
+                        if (deg._gpa > deg._gpa_scale) {
+                            showToast(
+                                `GPA must be smaller than GPA scale for degree: ${deg._degree_name}`,
+                                "bg-danger"
+                            );
+                            spinner.classList.add("d-none");
+                            save_button.classList.remove("disabled");
+                            close_button.classList.remove("disabled");
+                            return;
+                        }
+
                         try {
                             await addDegree({
                                 _degree_id: null,
@@ -499,12 +510,42 @@ document.addEventListener("DOMContentLoaded", async () => {
                             close_button.classList.remove("disabled");
 
                             console.log(error);
-                            showToast(error.message, "bg-warning");
+                            showToast(error.message, "bg-danger");
                         }
                     }
 
                     // Add new updated experiences
                     for (let exp of experiences) {
+                        if (exp._joining_date > now) {
+                            showToast(
+                                "Joining date cannot be in the future.",
+                                "bg-danger"
+                            );
+                            spinner.classList.add("d-none");
+                            save_button.classList.remove("disabled");
+                            close_button.classList.remove("disabled");
+                            return;
+                        }
+                        if (exp._ending_date > now) {
+                            showToast(
+                                "Ending date cannot be in the future.",
+                                "bg-danger"
+                            );
+                            spinner.classList.add("d-none");
+                            save_button.classList.remove("disabled");
+                            close_button.classList.remove("disabled");
+                            return;
+                        }
+                        if (exp._joining_date >= exp._ending_date) {
+                            showToast(
+                                "There should be difference between Joining and Ending date.",
+                                "bg-danger"
+                            );
+                            spinner.classList.add("d-none");
+                            save_button.classList.remove("disabled");
+                            close_button.classList.remove("disabled");
+                            return;
+                        }
                         try {
                             await addExperience({
                                 _experience_id: null,
@@ -517,7 +558,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             close_button.classList.remove("disabled");
 
                             console.log(error);
-                            showToast(error.message, "bg-warning");
+                            showToast(error.message, "bg-danger");
                         }
                     }
                     spinner.classList.add("d-none");
@@ -536,7 +577,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 close_button.classList.remove("disabled");
 
                 console.log(error);
-                showToast(error.message, "bg-warning");
+                showToast(error.message, "bg-danger");
             }
         });
 
@@ -730,7 +771,7 @@ const createDegreeFormFields = (degree = null, index = null) => {
         <!-- GPA Scale -->
         <div class="col-md-4">
             <label for="edit_gpa_scale_${index}" class="form-label">GPA Scale</label>
-            <input type="number" class="form-control" id="edit_gpa_scale_${index}" 
+            <input type="number" step="0.01" class="form-control" id="edit_gpa_scale_${index}" 
                 name="_gpa_scale" value="${
                     degree?._gpa_scale || ""
                 }" required />

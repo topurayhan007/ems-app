@@ -223,12 +223,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }, 1200);
                     } else {
                         modal.hide();
-                        showToast("Something went wrong!", "bg-warning");
+                        showToast("Something went wrong!", "bg-danger");
                     }
                 } catch (error) {
                     console.log(error);
                     modal.hide();
-                    showToast("Something went wrong!", "bg-warning");
+                    showToast("Something went wrong!", "bg-danger");
                 }
             };
         });
@@ -424,7 +424,7 @@ const createDegreeFormFields = (degree = null, index = null) => {
         <!-- GPA Scale -->
         <div class="col-md-4">
             <label for="edit_gpa_scale_${index}" class="form-label">GPA Scale</label>
-            <input type="number" class="form-control" id="edit_gpa_scale_${index}" 
+            <input type="number" step="0.01" class="form-control" id="edit_gpa_scale_${index}" 
                 name="_gpa_scale" value="${
                     degree?._gpa_scale || ""
                 }" required />
