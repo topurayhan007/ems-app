@@ -35,13 +35,13 @@ export const renderEmployeeTable = (employees) => {
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item btn-view" href="#" data-id="${
                                 emp._employee_id
-                            }">View</a>
+                            }">View details</a>
                             <a class="dropdown-item btn-edit" href="#" data-id="${
                                 emp._employee_id
-                            }" data-bs-toggle="modal" data-bs-target="#editEmployeeFormModal">Edit</a>
+                            }" data-bs-toggle="modal" data-bs-target="#editEmployeeFormModal">Edit employee</a>
                             <a class="dropdown-item btn-delete" href="#" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-id="${
                                 emp._employee_id
-                            }">Delete</a>
+                            }">Delete employee</a>
                         </div>
                     </div>
                 </td>
