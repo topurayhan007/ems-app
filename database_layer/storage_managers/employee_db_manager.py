@@ -32,7 +32,7 @@ class EmployeeDBManager(IEmployeeRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
 
     def get(self, employee_id):
         db_connection = self.db_manager.get_db_connection()
@@ -56,7 +56,8 @@ class EmployeeDBManager(IEmployeeRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
+
     
 
     def get_all(self):
@@ -80,7 +81,8 @@ class EmployeeDBManager(IEmployeeRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
+
         
     def search(self, search_text):
         db_connection = self.db_manager.get_db_connection()
@@ -122,7 +124,8 @@ class EmployeeDBManager(IEmployeeRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
+
 
     def delete(self, employee_id):
         db_connection = self.db_manager.get_db_connection()
@@ -144,7 +147,8 @@ class EmployeeDBManager(IEmployeeRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
+
         
     def update(self, employee_id, employee: Employee):
         db_connection = self.db_manager.get_db_connection()
@@ -189,7 +193,8 @@ class EmployeeDBManager(IEmployeeRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
+
 
 
     def db_data_to_employee_list(self, data) -> list[Employee]:

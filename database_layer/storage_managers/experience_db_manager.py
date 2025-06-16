@@ -32,7 +32,7 @@ class ExperienceDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
 
     def get(self, employee_id):
         db_connection = self.db_manager.get_db_connection()
@@ -56,7 +56,7 @@ class ExperienceDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
 
     def delete(self, experience_id):
         db_connection = self.db_manager.get_db_connection()
@@ -79,7 +79,7 @@ class ExperienceDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
 
     def update(self, experience_id, experience: Experience):
         db_connection = self.db_manager.get_db_connection()
@@ -113,7 +113,7 @@ class ExperienceDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
         
     
     def db_data_to_experience_list(self, data) -> list[Experience]:

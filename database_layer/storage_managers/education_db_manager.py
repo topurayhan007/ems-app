@@ -32,7 +32,8 @@ class EducationDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
+
 
     def get(self, employee_id):
         db_connection = self.db_manager.get_db_connection()
@@ -56,7 +57,7 @@ class EducationDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
 
     def delete(self, degree_id):
         db_connection = self.db_manager.get_db_connection()
@@ -79,8 +80,9 @@ class EducationDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
-
+            raise Exception(err.msg)
+        
+        
     def update(self, degree_id, degree: EducationalDegree):
         db_connection = self.db_manager.get_db_connection()
         cursor = db_connection.cursor()
@@ -115,7 +117,7 @@ class EducationDBManager(IRepository):
             print("error:", err.msg)
             cursor.close()
             db_connection.close()
-            return None
+            raise Exception(err.msg)
 
     
     def db_data_to_degree_list(self, data) -> list[EducationalDegree]:
