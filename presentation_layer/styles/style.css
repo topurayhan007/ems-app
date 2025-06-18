@@ -42,6 +42,7 @@
 
 body {
     font-family: var(--font-inter) !important;
+    background-color: #f8f8f8 !important;
     /* height: 100vh; */
     /* overflow: hidden; */
 }
@@ -68,17 +69,36 @@ header {
 .btn {
     border-radius: 10px !important;
 }
-.sidebar {
-    width: 280px;
-    overflow-y: auto !important;
+
+.sidebar-wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 1000;
+    /* width: 280px; */
+    padding: 55px 0 0 10px;
     transition: all 0.4s ease;
+}
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 48px);
+    /* width: 280px; */
+    overflow-y: auto !important;
     box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.2) !important;
 }
-.sidebar.collapsed {
+.sidebar-wrapper.collapsed {
     /* transform: margin-left 0.3 ease; */
     width: 0px;
-    padding: 0 !important;
+    /* padding: 0 !important; */
     transition: all 0.4s ease;
+}
+#sidebar.collapsed #aside {
+    width: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transition: all 0.3s ease;
 }
 #sidebarBackdrop {
     z-index: 30;
@@ -246,7 +266,7 @@ td:last-child {
     .view-emp .table-responsive {
         height: 450px;
     }
-    .sidebar {
+    .sidebar-wrapper {
         position: fixed;
         width: 250px;
         height: 100%;
@@ -257,8 +277,8 @@ td:last-child {
     }
 }
 
-@media only screen and (min-width: 577px) and (max-width: 768px) {
-    .sidebar {
+@media only screen and (min-width: 577px) and (max-width: 767px) {
+    .sidebar-wrapper {
         position: fixed;
         width: 250px;
         height: 100%;
