@@ -348,19 +348,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // Toggle sidebar
-const mobile = window.innerWidth < 768;
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("sidebarToggle");
 const backdrop = document.getElementById("sidebarBackdrop");
 
 const updateSidebarState = () => {
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 769;
     if (isMobile) {
         sidebar.classList.add("collapsed");
         backdrop.classList.add("d-none");
+        main.classList.remove("col-md-9", "col-lg-10", "ms-sm-auto");
+        main.classList.add("col-md-12");
     } else {
         sidebar.classList.remove("collapsed");
         backdrop.classList.add("d-none");
+        main.classList.remove("col-md-12");
+        main.classList.add("col-md-9", "col-lg-10", "ms-sm-auto");
     }
 };
 
@@ -370,15 +373,23 @@ toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
 
     const mobile = window.innerWidth < 768;
-    const sidebarOpen = !sidebar.classList.contains("collapsed");
+    const sidebarOpen = sidebar.classList.contains("collapsed");
+    if (sidebarOpen) {
+        console.log("yes");
 
-    if (mobile && sidebarOpen) {
+        main.classList.remove("col-md-9", "col-lg-10", "ms-sm-auto");
+        main.classList.add("col-md-12");
+    } else {
+        main.classList.remove("col-md-12");
+        main.classList.add("col-md-9", "col-lg-10", "ms-sm-auto");
+    }
+
+    if (mobile && !sidebarOpen) {
         backdrop.classList.remove("d-none");
     } else {
         backdrop.classList.add("d-none");
     }
 });
-
 backdrop.addEventListener("click", () => {
     sidebar.classList.add("collapsed");
     backdrop.classList.add("d-none");
