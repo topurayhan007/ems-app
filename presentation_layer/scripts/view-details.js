@@ -166,8 +166,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // NID check: 10 to 17 digits
             if (
-                data.employee._nid.toString().length < 10 ||
-                data.employee._nid.toString().length > 17
+                data.employee._nid.length < 10 ||
+                data.employee._nid.length > 17
             ) {
                 showToast("NID must be 10 to 17 digits.", "bg-danger");
                 return;
@@ -636,7 +636,7 @@ const getEmployeeFormData = (formId, typeOfOperation) => {
 
     const employeeData = {};
     for (const [key, value] of formData.entries()) {
-        if (key === "_employee_id" || key === "_nid" || key === "_salary") {
+        if (key === "_employee_id" || key === "_salary") {
             employeeData[key] = parseInt(value);
         } else {
             employeeData[key] = value;
