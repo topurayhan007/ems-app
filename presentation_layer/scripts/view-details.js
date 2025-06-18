@@ -353,7 +353,7 @@ const toggleBtn = document.getElementById("sidebarToggle");
 const backdrop = document.getElementById("sidebarBackdrop");
 
 const updateSidebarState = () => {
-    const isMobile = window.innerWidth < 769;
+    const isMobile = window.innerWidth < 768;
     if (isMobile) {
         sidebar.classList.add("collapsed");
         backdrop.classList.add("d-none");
@@ -375,8 +375,6 @@ toggleBtn.addEventListener("click", () => {
     const mobile = window.innerWidth < 768;
     const sidebarOpen = sidebar.classList.contains("collapsed");
     if (sidebarOpen) {
-        console.log("yes");
-
         main.classList.remove("col-md-9", "col-lg-10", "ms-sm-auto");
         main.classList.add("col-md-12");
     } else {
