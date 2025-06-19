@@ -113,5 +113,5 @@ class EmployeeBuilder:
             self._nationality,
             self._joining_date,
             self._present_address,
-            self._present_address
+            self._permanent_address
         )
