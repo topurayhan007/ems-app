@@ -500,10 +500,11 @@ const createDegreeFormFields = (degree = null, index = null) => {
     formDiv.className = "row g-3 mt-0 degree-form";
     formDiv.id = formId;
     formDiv.innerHTML = `
-
         <!-- Degree Name -->
         <div class="col-md-6">
-            <label for="edit_degree_name_${index}" class="form-label">Degree Name</label>
+            <label for="edit_degree_name_${index}" class="form-label">Degree Name
+                <span class="text-danger">*</span>
+             </label>
             <input type="text" class="form-control" id="edit_degree_name_${index}" 
                 name="_degree_name" value="${
                     degree?._degree_name || ""
@@ -512,7 +513,9 @@ const createDegreeFormFields = (degree = null, index = null) => {
         
         <!-- Institute Name -->
         <div class="col-md-6">
-            <label for="edit_institute_name_${index}" class="form-label">Institute Name</label>
+            <label for="edit_institute_name_${index}" class="form-label">Institute Name
+                <span class="text-danger">*</span>
+            </label>
             <input type="text" class="form-control" id="edit_institute_name_${index}" 
                 name="_institute_name" value="${
                     degree?._institute_name || ""
@@ -521,28 +524,36 @@ const createDegreeFormFields = (degree = null, index = null) => {
         
         <!-- Major/Field of Study -->
         <div class="col-md-6">
-            <label for="edit_major_${index}" class="form-label">Major/Field of Study</label>
+            <label for="edit_major_${index}" class="form-label">Major/Field of Study
+                <span class="text-danger">*</span>
+            </label>
             <input type="text" class="form-control" id="edit_major_${index}" 
                 name="_major" value="${degree?._major || ""}" required />
         </div>
         
         <!-- Location -->
         <div class="col-md-6">
-            <label for="edit_degree_location_${index}" class="form-label">Location</label>
+            <label for="edit_degree_location_${index}" class="form-label">Location
+                <span class="text-danger">*</span>
+            </label>
             <input type="text" class="form-control" id="edit_degree_location_${index}" 
                 name="_location" value="${degree?._location || ""}" required />
         </div>
         
         <!-- GPA -->
         <div class="col-md-4">
-            <label for="edit_gpa_${index}" class="form-label">GPA</label>
+            <label for="edit_gpa_${index}" class="form-label">GPA
+                <span class="text-danger">*</span>
+            </label>
             <input type="number" step="0.01" class="form-control" id="edit_gpa_${index}" 
                 name="_gpa" value="${degree?._gpa || ""}" required />
         </div>
         
         <!-- GPA Scale -->
         <div class="col-md-4">
-            <label for="edit_gpa_scale_${index}" class="form-label">GPA Scale</label>
+            <label for="edit_gpa_scale_${index}" class="form-label">GPA Scale
+                <span class="text-danger">*</span>
+            </label>
             <input type="number" step="0.01" class="form-control" id="edit_gpa_scale_${index}" 
                 name="_gpa_scale" value="${
                     degree?._gpa_scale || ""
@@ -551,7 +562,8 @@ const createDegreeFormFields = (degree = null, index = null) => {
         
         <!-- Year of Passing -->
         <div class="col-md-4">
-            <label for="edit_year_of_passing_${index}" class="form-label">Year of Passing</label>
+            <label for="edit_year_of_passing_${index}" class="form-label">Year of Passing <span class="text-danger">*</span>
+            </label>
             <input type="number" min="1900" max="2099" class="form-control" 
                 id="edit_year_of_passing_${index}" name="_year_of_passing" 
                 value="${degree?._year_of_passing || ""}" required />
@@ -580,7 +592,9 @@ const createExperienceFormFields = (experience = null, index = null) => {
     formDiv.innerHTML = `
         <!-- Company Name -->
         <div class="col-md-6">
-            <label for="edit_company_name_${index}" class="form-label">Company Name</label>
+            <label for="edit_company_name_${index}" class="form-label">Company Name 
+                <span class="text-danger">*</span>
+            </label>
             <input type="text" class="form-control" id="edit_company_name_${index}" 
                 name="_company_name" value="${
                     experience?._company_name || ""
@@ -589,7 +603,9 @@ const createExperienceFormFields = (experience = null, index = null) => {
         
         <!-- Position -->
         <div class="col-md-6">
-            <label for="edit_position_${index}" class="form-label">Position</label>
+            <label for="edit_position_${index}" class="form-label">Position 
+                <span class="text-danger">*</span>
+            </label>
             <input type="text" class="form-control" id="edit_position_${index}" 
                 name="_position" value="${
                     experience?._position || ""
@@ -598,7 +614,9 @@ const createExperienceFormFields = (experience = null, index = null) => {
         
         <!-- Joining Date -->
         <div class="col-md-6">
-            <label for="edit_exp_joining_date_${index}" class="form-label">Joining Date</label>
+            <label for="edit_exp_joining_date_${index}" class="form-label">Joining Date
+                <span class="text-danger">*</span>
+            </label>
             <input type="date" class="form-control" id="edit_exp_joining_date_${index}" 
                 name="_joining_date" value="${
                     experience?._joining_date
@@ -609,7 +627,9 @@ const createExperienceFormFields = (experience = null, index = null) => {
 
         <!-- Ending Date -->
         <div class="col-md-6">
-            <label for="edit_ending_date_${index}" class="form-label">Ending Date</label>
+            <label for="edit_ending_date_${index}" class="form-label">Ending Date
+                <span class="text-danger">*</span>
+            </label>
             <input type="date" class="form-control" id="edit_ending_date_${index}" 
                 name="_ending_date" value="${
                     experience?._ending_date
@@ -620,7 +640,9 @@ const createExperienceFormFields = (experience = null, index = null) => {
         
         <!-- Location -->
         <div class="col-md-12">
-            <label for="edit_location_${index}" class="form-label">Location</label>
+            <label for="edit_location_${index}" class="form-label">Location
+                <span class="text-danger">*</span>
+            </label>
             <input type="text" class="form-control" id="edit_location_${index}" 
                 name="_location" value="${
                     experience?._location || ""
