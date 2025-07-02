@@ -39,7 +39,8 @@ class EmployeeDBManager(IEmployeeRepository):
         cursor = db_connection.cursor(dictionary=True)
         
         query = (
-            "SELECT * FROM employees "
+            "SELECT employee_id, name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, salary, nationality, joining_date, present_address, permanent_address "
+            "FROM employees "
             "WHERE employee_id=%s"
         )
 
@@ -65,7 +66,8 @@ class EmployeeDBManager(IEmployeeRepository):
         cursor = db_connection.cursor(dictionary=True)
         
         query = (
-            "SELECT * FROM employees "
+            "SELECT employee_id, name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, salary, nationality, joining_date, present_address, permanent_address "
+            "FROM employees "
         )
 
         try:
@@ -90,7 +92,8 @@ class EmployeeDBManager(IEmployeeRepository):
 
         params = tuple(["%" + search_text + "%"] * 18)
         query = (
-            "SELECT * FROM employees WHERE "
+            "SELECT employee_id, name, date_of_birth, nid, email, phone_no, gender, father_name, mother_name, marital_status, role, dept, designation, salary, nationality, joining_date, present_address, permanent_address "
+            "FROM employees WHERE "
             "employee_id LIKE %s OR "
             "name LIKE %s OR "
             "date_of_birth LIKE %s OR "
