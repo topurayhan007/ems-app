@@ -95,23 +95,5 @@ class EmployeeBuilder:
 
 
     def build(self):
-        return Employee(
-            self._employee_id,
-            self._name,
-            self._date_of_birth,
-            self._nid,
-            self._email,
-            self._phone_no,
-            self._gender,
-            self._father_name,
-            self._mother_name,
-            self._marital_status,
-            self._role,
-            self._dept,
-            self._designation,
-            self._salary,
-            self._nationality,
-            self._joining_date,
-            self._present_address,
-            self._permanent_address
-        )
+        return self
+    
