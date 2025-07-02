@@ -40,7 +40,8 @@ class EducationDBManager(IRepository):
         cursor = db_connection.cursor(dictionary=True)
 
         query = (
-            "SELECT * FROM degrees "
+            "SELECT degree_id, employee_id, degree_name, institute_name, major, location, gpa, gpa_scale, year_of_passing "
+            "FROM degrees "
             "WHERE employee_id = %s"
         )
 

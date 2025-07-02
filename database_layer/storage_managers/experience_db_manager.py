@@ -39,7 +39,8 @@ class ExperienceDBManager(IRepository):
         cursor = db_connection.cursor(dictionary=True)
         
         query = (
-            "SELECT * FROM experiences "
+            "SELECT experience_id, employee_id, company_name, position, joining_date, ending_date, location "
+            "FROM experiences "
             "WHERE employee_id = %s"
         )
 
